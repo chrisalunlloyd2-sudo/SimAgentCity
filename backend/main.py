@@ -11,6 +11,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from core.orchestrator import AgentCityOrchestrator
 from core.registry_bridge import RegistryBridge
 from core.agent_registrar import AgentRegistrar
+from core.telemetry_monitor import TelemetryMonitor
 
 app = FastAPI(title="SimAgentCity API")
 
@@ -19,6 +20,7 @@ WORKSPACE = os.path.join(os.getcwd(), "city_workspace")
 orchestrator = AgentCityOrchestrator(WORKSPACE)
 registry = RegistryBridge()
 registrar = AgentRegistrar(os.path.join(os.getcwd(), "agents_population.json"))
+telemetry = TelemetryMonitor()
 
 # Mount Frontend
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
@@ -75,6 +77,11 @@ async def assign_task(req: TaskRequest):
 async def get_agents():
     """Returns status of all active sims."""
     return orchestrator.active_agents
+
+@app.get("/vitals")
+async def get_vitals():
+    """Returns real-time city metabolism stats."""
+    return telemetry.get_city_vitals()
 
 if __name__ == "__main__":
     import uvicorn
