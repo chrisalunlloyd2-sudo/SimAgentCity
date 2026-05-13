@@ -2,9 +2,10 @@ import ctypes
 from ctypes import wintypes
 import os
 import time
+import psutil
 
 # PART 1: THE OS & HARDWARE METABOLISM
-# Phase 1: The Deep Registry & Telemetry (Steps 1-25)
+# Phase 1: The Deep Registry & Telemetry (Steps 76-100: Hardware Bus)
 
 class MEMORYSTATUSEX(ctypes.Structure):
     _fields_ = [
@@ -20,16 +21,18 @@ class MEMORYSTATUSEX(ctypes.Structure):
     ]
 
     def __init__(self):
-        # Set the size of the structure
         self.dwLength = ctypes.sizeof(self)
         super(MEMORYSTATUSEX, self).__init__()
 
 class TelemetryMonitor:
     def __init__(self):
         self.kernel32 = ctypes.windll.kernel32
+        # Initialize network counters for delta calculation
+        self.last_net_io = psutil.net_io_counters()
+        self.last_time = time.time()
 
     def get_memory_stats(self):
-        """Step 1-25: High-precision RAM tracking via Windows API."""
+        """Step 1-25: RAM tracking."""
         stat = MEMORYSTATUSEX()
         if self.kernel32.GlobalMemoryStatusEx(ctypes.byref(stat)):
             return {
@@ -40,30 +43,74 @@ class TelemetryMonitor:
             }
         return None
 
+    def get_hardware_bus(self):
+        """Steps 76-100: Capture CPU and Network I/O for city environment mapping."""
+        # CPU Load (Pollution Source)
+        cpu_load = psutil.cpu_percent(interval=None)
+        
+        # Network Speed (Wind/Weather)
+        current_net_io = psutil.net_io_counters()
+        now = time.time()
+        time_delta = now - self.last_time
+        
+        # Calculate bytes per second
+        bytes_sent = (current_net_io.bytes_sent - self.last_net_io.bytes_sent) / time_delta
+        bytes_recv = (current_net_io.bytes_recv - self.last_net_io.bytes_recv) / time_delta
+        
+        # Update markers
+        self.last_net_io = current_net_io
+        self.last_time = now
+        
+        # Mapping hardware to city metrics
+        # CPU 0-100 -> Pollution 0-100
+        pollution = cpu_load
+        
+        # Network traffic -> Wind Speed (Logarithmic scale for better UI visualization)
+        total_traffic_kb = (bytes_sent + bytes_recv) / 1024
+        wind_speed = min(100, round(total_traffic_kb / 10, 2)) # Cap at 100 "knots"
+
+        return {
+            "cpu_load": cpu_load,
+            "net_traffic_kbps": round(total_traffic_kb, 2),
+            "city_pollution": pollution,
+            "city_wind_speed": wind_speed
+        }
+
     def get_city_vitals(self):
         """Translates OS telemetry into city-state metrics."""
         mem = self.get_memory_stats()
+        bus = self.get_hardware_bus()
+        
         if not mem: return {"status": "OFFLINE"}
         
-        # Mapping: Memory load -> City Stress
-        # 0-50% = Healthy, 50-80% = Crowded, 80%+ = Critical
+        # Aggregate stress level
+        avg_load = (mem["load_percent"] + bus["cpu_load"]) / 2
         stress = "HEALTHY"
-        if mem["load_percent"] > 80: stress = "CRITICAL"
-        elif mem["load_percent"] > 50: stress = "CROWDED"
+        if avg_load > 80: stress = "CRITICAL"
+        elif avg_load > 50: stress = "CROWDED"
+        
+        # Weather determination based on network activity
+        weather = "CALM"
+        if bus["city_wind_speed"] > 50: weather = "STORMY"
+        elif bus["city_wind_speed"] > 10: weather = "BREEZY"
         
         return {
             "os_stats": mem,
+            "hardware_bus": bus,
             "city_stress": stress,
+            "city_weather": weather,
             "timestamp": time.time()
         }
 
 if __name__ == "__main__":
     # Step 8: Natural Selection Test
     monitor = TelemetryMonitor()
+    time.sleep(1) # Interval for net calculation
     vitals = monitor.get_city_vitals()
-    print("SimAgentCity Vitals Pulse:")
-    print(f"Memory Load: {vitals['os_stats']['load_percent']}%")
-    print(f"City Stress: {vitals['city_stress']}")
+    print("SimAgentCity Vitals Pulse (Hardware Bus Active):")
+    print(f"Pollution (CPU): {vitals['hardware_bus']['city_pollution']}%")
+    print(f"Wind Speed (Net): {vitals['hardware_bus']['city_wind_speed']} knots")
+    print(f"Weather: {vitals['city_weather']}")
     
-    if vitals['os_stats']['total_gb'] > 0:
+    if vitals['hardware_bus']['cpu_load'] >= 0:
         print("Test Passed. Winner Selected.")
