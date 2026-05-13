@@ -12,6 +12,7 @@ from core.orchestrator import AgentCityOrchestrator
 from core.registry_bridge import RegistryBridge
 from core.agent_registrar import AgentRegistrar
 from core.telemetry_monitor import TelemetryMonitor
+from core.road_builder import RoadBuilder
 
 app = FastAPI(title="SimAgentCity API")
 
@@ -21,6 +22,7 @@ orchestrator = AgentCityOrchestrator(WORKSPACE)
 registry = RegistryBridge()
 registrar = AgentRegistrar(os.path.join(os.getcwd(), "agents_population.json"))
 telemetry = TelemetryMonitor()
+roads = RoadBuilder(WORKSPACE)
 
 # Mount Frontend
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
@@ -96,6 +98,19 @@ async def get_agents():
 async def get_vitals():
     """Returns real-time city metabolism stats."""
     return telemetry.get_city_vitals()
+
+@app.get("/transit")
+async def get_transit_mapping(mode: str = "TCP"):
+    """Returns the city transit mapping (TCP=WALK, UDP=BIKE, FTP=ROAD)."""
+    return roads.protocol_dispatch({}, mode)
+
+@app.post("/bulldoze")
+async def bulldoze_entity(path: str):
+    """Step 101-150: Safe deletion protocol."""
+    success, msg = roads.bulldoze(path)
+    if not success:
+        raise HTTPException(status_code=400, detail=msg)
+    return {"status": "SUCCESS", "message": msg}
 
 if __name__ == "__main__":
     import uvicorn
