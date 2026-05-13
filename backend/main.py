@@ -34,6 +34,12 @@ class MoveRequest(BaseModel):
     source: str
     destination: str
 
+class RegistryUpdateRequest(BaseModel):
+    hive: str = "HKEY_CURRENT_USER"
+    subkey: str
+    value_name: str
+    value: str
+
 class AgentRegisterRequest(BaseModel):
     name: str
     role: str
@@ -47,6 +53,14 @@ async def get_map():
 async def get_registry_map(hive: str = "HKEY_CURRENT_USER", subkey: str = "Software"):
     """Returns registry keys as buildings."""
     return {"keys": registry.get_keys(hive, subkey)}
+
+@app.post("/registry/update")
+async def update_registry(req: RegistryUpdateRequest):
+    """Allows agents to renovate registry buildings."""
+    success, msg = registry.write_value(req.hive, req.subkey, req.value_name, req.value)
+    if not success:
+        raise HTTPException(status_code=400, detail=msg)
+    return {"status": "SUCCESS", "message": msg}
 
 @app.post("/move")
 async def move_entity(req: MoveRequest):
