@@ -42,19 +42,29 @@ class CityEngine {
 
     drawEntities() {
         this.entities.forEach(ent => {
-            ctx.fillStyle = ent.type === 'agent' ? '#f00' : '#ff0';
+            ctx.fillStyle = ent.color || '#fff';
             ctx.fillRect(ent.x * tileSize, ent.y * tileSize, tileSize - 2, tileSize - 2);
             
             // Retro labels
             ctx.fillStyle = '#fff';
             ctx.font = '10px "MS Sans Serif"';
-            ctx.fillText(ent.name, ent.x * tileSize, ent.y * tileSize - 5);
+            const displayName = ent.name.length > 10 ? ent.name.substring(0, 8) + '..' : ent.name;
+            ctx.fillText(displayName, ent.x * tileSize, ent.y * tileSize - 5);
         });
+    }
+
+    drawDistricts() {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.font = '20px "MS Sans Serif"';
+        ctx.fillText("FILE MALL", 2 * tileSize, 2 * tileSize - 10);
+        ctx.fillText("REGISTRY PLAZA", 15 * tileSize, 2 * tileSize - 10);
+        ctx.fillText("AGENT DISTRICT", 2 * tileSize, 15 * tileSize - 10);
     }
 
     draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         this.drawGrid();
+        this.drawDistricts();
         this.drawEntities();
     }
 

@@ -3,21 +3,25 @@ SimAgentCity/
 │   ├── main.py              # FastAPI Entry Point (Locked)
 │   ├── core/
 │   │   ├── orchestrator.py  # Agent management & concurrent loops (Locked)
-│   │   ├── os_bridge.py     # File movement & Registry logic (Locked)
+│   │   ├── os_bridge.py     # File movement logic (Locked)
+│   │   ├── registry_bridge.py # 2D Registry synchronization (Locked)
+│   │   ├── agent_registrar.py # Population management (Locked)
 │   │   └── llm_client.py    # h2o-danube/Ollama interface (Locked)
-│   └── api/                 # Endpoint definitions (Placeholder)
+│   └── api/                 # Endpoint definitions
 ├── frontend/
 │   ├── index.html           # Retro UI Root (Locked)
 │   ├── css/
 │   │   └── style.css        # SimCity 1995 aesthetic styles (Locked)
 │   └── js/
-│       ├── engine.js        # Canvas rendering (Tile system) (Locked)
+│       ├── engine.js        # Canvas rendering (Districts & Tiles) (Locked)
 │       ├── input.js         # Drag & Drop handling (TODO)
-│       └── bridge.js        # Websocket/API sync to backend (Locked)
+│       └── bridge.js        # API sync (Files, Registry, Agents) (Locked)
 ├── city_workspace/          # Managed directory for file mining
-├── tools/                   # Lightweight legacy-style tools
-│   └── task_mgr_mini.py     # (TODO)
+├── tools/                   # AI-Compatible legacy-style tools
+│   ├── task_mgr_mini.py     # Lightweight process monitor (Locked)
+│   └── agent_registrar_tool.py # CLI Hook for agent population (Locked)
 ├── requirements.txt         # (Synced)
 ├── PULSE_HEARTBEAT.txt      # (1.2s Sync Protocol)
+├── agents_population.json   # (Persisted Sims)
 ├── .gitignore
 └── README.md                # (Populated)

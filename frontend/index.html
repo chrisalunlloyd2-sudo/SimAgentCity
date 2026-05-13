@@ -14,11 +14,23 @@
                 <button class="tool-btn" id="tool-miner">MINER</button>
                 <button class="tool-btn" id="tool-proc">PROCESSOR</button>
                 <button class="tool-btn" id="tool-ship">SHIPPER</button>
+                <button class="tool-btn" id="tool-mall">AGENT MALL</button>
+                <button class="tool-btn" id="tool-registry">REGISTRY</button>
             </div>
             <div id="status-window">
                 <h3>PULSE STATUS</h3>
                 <div id="pulse-indicator"></div>
                 <p id="agent-count">Agents: 0</p>
+                <div id="recruitment-form" style="display:none; border-top: 1px solid #808080; margin-top: 10px; padding-top: 5px;">
+                    <h4>RECRUIT SIM</h4>
+                    <input type="text" id="reg-name" placeholder="Agent Name" style="width: 80%;">
+                    <select id="reg-role" style="width: 85%; margin: 5px 0;">
+                        <option value="Miner">Miner</option>
+                        <option value="Processor">Processor</option>
+                        <option value="Shipper">Shipper</option>
+                    </select>
+                    <button class="tool-btn" onclick="recruitAgent()">RECRUIT</button>
+                </div>
             </div>
         </div>
         <div id="city-map">
