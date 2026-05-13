@@ -1,82 +1,64 @@
 # SimAgentCity - Enterprise Systems Manifesto
-**Version:** 1.1.0-Evolved
-**Status:** STABLE / PRODUCTION-READY
-**Author:** Systems Engineer (Orchestrator)
+**Version:** 1.1.0-Isometric
+**Status:** EVOLVING / SECTOR ACTIVE
+**Author:** The Architect (Systems Orchestrator)
 
 ---
 
 ## 1. THE SEED AXIOM (Executive Summary)
-> **Core Intent:** Physical UI-to-OS Synchronization: Moving a pixel on a grid executes a file-system operation on the host.
+> **Core Intent:** *The grid is the truth.* Every pixel shift is a physical OS command. We are building the nervous system of the machine, one district at a time.
 
-This system was evolved using a **Darwinian Genetic Pipeline**, ensuring every module passed local AST fitness tests and functional selection before integration. It is designed for zero-touch maintenance and high-precision logic execution, allowing a visual 1995-style city grid to act as a physical orchestrator for localized file and registry operations.
+This system was evolved using a **Darwinian Genetic Pipeline**, forged in the fires of local AST fitness tests. It is a living, breathing software factory. We don't just "manage files"; we zone them for industrial processing. We don't "kill processes"; we bulldoze their skyscrapers. 
 
 ---
 
-## 2. SYSTEM TOPOLOGY (Architectural Blueprint)
-The following ASCII map represents the physical and logical dispersion of the system's DNA.
+## 2. CITY TOPOLOGY (Architectural Blueprint)
+The system's DNA is dispersed across specialized urban sectors:
 
 ```text
 SimAgentCity/
- ├── .git/                <-- Version Control & History
- ├── backend/             <-- Evolved Logic Atoms
- │   ├── main.py          <-- FastAPI Entry Point & Core Engine Hook
- │   ├── core/            <-- Axiomatic Foundation (OS Bridge, LLM, Registry)
- │   └── api/             <-- External Bridge Logic
- ├── frontend/            <-- Retro SimCity 1995 Interfaces
- │   ├── index.html       <-- UI Root
- │   ├── css/             <-- Styling Strains
- │   └── js/              <-- Engine & WebSockets Sync
- ├── tools/               <-- Helper Strains (Mini Task Mgr, Agent Registrar)
- ├── city_workspace/      <-- Physical Sandboxed Environment
- ├── requirements.txt     <-- Dependency Sentinel Manifest
- ├── PULSE_HEARTBEAT.txt  <-- 1.2s Sync Protocol configuration
- ├── PROJECT_MAP.txt      <-- Topology Ledger
- └── ENTERPRISE_MANIFESTO.md <-- This Document
+ ├── .git/                <-- The Ledger of History
+ ├── backend/             <-- The Underground Power Grid (Python/FastAPI)
+ │   ├── main.py          <-- Central Command Hook
+ │   ├── core/            <-- The Foundation Atoms
+ │   └── api/             <-- Public Transit Handshakes
+ ├── frontend/            <-- The Isometric Skyline (Canvas/1995 JS)
+ │   ├── index.html       <-- City Gates
+ │   ├── css/             <-- Retro Atmospheric Filtering
+ │   └── js/              <-- The Engine of Time (1.2s Pulse)
+ ├── tools/               <-- Municipal Services (Demolition/Recruitment)
+ ├── city_workspace/      <-- The Industrial Sandbox (Raw Resources)
+ ├── requirements.txt     <-- The Resource Manifest
+ ├── PULSE_HEARTBEAT.txt  <-- The 1.2s Handshake Protocol
+ └── ENTERPRISE_MANIFESTO.md <-- The Sacred Laws
 ```
 
 ---
 
-## 3. OPERATIONAL RUNBOOK (Deployment & Maintenance)
-### 3.1 One-Line Initial Genesis
-To spawn the environment and verify system health in a single pulse:
+## 3. OPERATIONAL RUNBOOK (City Maintenance)
+### 3.1 One-Line Genesis
+To initialize the sector and verify city health:
 `git clone https://github.com/chrisalunlloyd2-sudo/SimAgentCity.git && cd SimAgentCity && pip install -r requirements.txt && python backend/main.py`
 
-### 3.2 Dependency Sentinel
-**Primary Runtime:** Python 3.11+
-**Key Dependencies:** `fastapi`, `uvicorn`, `requests`, `psutil`
-**Environment Constraints:** Requires local execution of Ollama (`h2o-danube3:4b` or `qwen2.5:0.5b`) bound to `localhost:11434`. Windows OS recommended for full Registry Plaza capabilities.
+### 3.2 Environmental Constraints
+**The Atmosphere:** Python 3.11+
+**The Power Plants:** Local Ollama swarms (`h2o-danube3:4b`).
+**The Ground:** Windows OS (Required for Registry Plaza depth).
 
-### 3.3 Health Handshakes
-**Status Command:** Navigate to `http://localhost:8000/map` while backend is running.
-**Success Indicator:** Returns HTTP 200 with physical file system mapped as JSON entities.
-**Failure Protocol:** Capture local Traceback, isolate the unfit module, and trigger a mutation loop using the Darwinian Engine CLI.
+### 3.3 The Pulse Handshake
+The city synchronizes with the OS every **1.2 seconds**. A green pulse indicator confirms that the Architect's hand is steady and the bridge is active.
 
 ---
 
-## 4. INTERFACE LOGIC (API & Integration)
-The system communicates via Functional Axioms.
-
-**Primary Entry:** `backend/main.py`
-**Input Protocol:** Accepts REST API calls for task assignment (`/assign`), file movement (`/move`), and agent registration (`/mall/register`).
-**Output Protocol:** Returns sanitized, AST-verified JSON structures reflecting real-time physical OS and Registry topologies.
+## 4. THE ACTION PROTOCOLS (Municipal Code)
+- **THE BULLDOZER:** Moving a file to `city_trash` initiates a safe, reversible deletion protocol.
+- **THE ROAD BUILDER:** FTP links are paved as bulk infrastructure (Symlinks).
+- **THE TRANSIT SYSTEM:** TCP is mapped to 'Walking' (Reliable); UDP is mapped to 'Bicycles' (Fast/Nimble).
 
 ---
 
-## 5. SECURITY & COMPLIANCE LEDGER
-**PII Scrubbing:** All modules have undergone a Recursive Regex Scan to redact local paths, secrets, and identifiers. Paths are dynamically resolved via `os.getcwd()`.
-**Entropy Check:** Automated scan confirmed no high-entropy strings (hidden keys) exist in the codebase.
-**Data Privacy:** All cloud pings are stateless; no genetic data is stored on remote servers post-execution. LLM interactions are strictly local via Ollama.
+## 5. DARWINIAN LOGS
+**Mutation Rate:** 1.2s per Page.
+**Selection Pressure:** Zero-Yap Adherence, AST Purity, and Physical Path Persistence.
 
----
-
-## 6. DARWINIAN HISTORY (Mutation Log)
-**Generations Evolved:** Phase 1 through 33 (100+ Prompt Variations Tested).
-**Selection Pressure applied:** AST Parsing, Subprocess Execution, Local Path Verification, Boolean Logic Completeness.
-**Average Mutation Rate:** 1.2 seconds per Page (Aligned with Pulse Handshake).
-
----
-
-## 7. HANDOVER & LICENSE
-**License:** MIT (Implicit)
-**Maintenance:** System is self-documenting. To update, feed a new Seed Axiom to the `DarwinianEngine_v8.py` orchestrator.
-**Final Certification:** [INTEGRITY_VERIFIED_AND_LOCKED]
+**Final Certification:** [CITY_ALIVE_AND_SYNCED]
