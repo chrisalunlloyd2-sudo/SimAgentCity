@@ -13,6 +13,7 @@ from core.registry_bridge import RegistryBridge
 from core.agent_registrar import AgentRegistrar
 from core.telemetry_monitor import TelemetryMonitor
 from core.road_builder import RoadBuilder
+from tools.task_mgr_mini import get_process_summary, kill_process
 
 app = FastAPI(title="SimAgentCity API")
 
@@ -103,6 +104,19 @@ async def get_vitals():
 async def get_transit_mapping(mode: str = "TCP"):
     """Returns the city transit mapping (TCP=WALK, UDP=BIKE, FTP=ROAD)."""
     return roads.protocol_dispatch({}, mode)
+
+@app.get("/processes")
+async def get_processes():
+    """Returns OS processes as system buildings."""
+    return {"processes": get_process_summary()}
+
+@app.post("/demolish/process")
+async def demolish_process(pid: int):
+    """Kills an OS process by demolishing its sprite."""
+    success, msg = kill_process(pid)
+    if not success:
+        raise HTTPException(status_code=400, detail=msg)
+    return {"status": "SUCCESS", "message": msg}
 
 @app.post("/bulldoze")
 async def bulldoze_entity(path: str):
