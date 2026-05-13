@@ -1,0 +1,23 @@
+SimAgentCity/
+├── backend/
+│   ├── main.py              # FastAPI Entry Point (Locked)
+│   ├── core/
+│   │   ├── orchestrator.py  # Agent management & concurrent loops (Locked)
+│   │   ├── os_bridge.py     # File movement & Registry logic (Locked)
+│   │   └── llm_client.py    # h2o-danube/Ollama interface (Locked)
+│   └── api/                 # Endpoint definitions (Placeholder)
+├── frontend/
+│   ├── index.html           # Retro UI Root (Locked)
+│   ├── css/
+│   │   └── style.css        # SimCity 1995 aesthetic styles (Locked)
+│   └── js/
+│       ├── engine.js        # Canvas rendering (Tile system) (Locked)
+│       ├── input.js         # Drag & Drop handling (TODO)
+│       └── bridge.js        # Websocket/API sync to backend (Locked)
+├── city_workspace/          # Managed directory for file mining
+├── tools/                   # Lightweight legacy-style tools
+│   └── task_mgr_mini.py     # (TODO)
+├── requirements.txt         # (Synced)
+├── PULSE_HEARTBEAT.txt      # (1.2s Sync Protocol)
+├── .gitignore
+└── README.md                # (Populated)

@@ -1,0 +1,7 @@
+# SimAgentCity Heartbeat
+# 1.2s Pulse Sync
+
+PULSE_STATUS=ACTIVE
+LAST_SYNC=0
+FPS_TARGET=60
+TICK_RATE=1.2

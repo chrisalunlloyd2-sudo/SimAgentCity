@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimAgentCity v1.0</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <div id="desktop">
+        <div id="sidebar">
+            <div class="tool-group">
+                <h3>CITY TOOLS</h3>
+                <button class="tool-btn" id="tool-miner">MINER</button>
+                <button class="tool-btn" id="tool-proc">PROCESSOR</button>
+                <button class="tool-btn" id="tool-ship">SHIPPER</button>
+            </div>
+            <div id="status-window">
+                <h3>PULSE STATUS</h3>
+                <div id="pulse-indicator"></div>
+                <p id="agent-count">Agents: 0</p>
+            </div>
+        </div>
+        <div id="city-map">
+            <canvas id="city-canvas"></canvas>
+        </div>
+    </div>
+    <script src="static/js/engine.js"></script>
+    <script src="static/js/bridge.js"></script>
+</body>
+</html>

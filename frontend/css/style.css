@@ -1,0 +1,75 @@
+/* SimCity 1995 Aesthetic Palette */
+:root {
+    --gray-bg: #c0c0c0;
+    --blue-header: #000080;
+    --green-map: #008000;
+    --shadow: #808080;
+    --highlight: #ffffff;
+}
+
+body {
+    background-color: #333;
+    color: #000;
+    font-family: "MS Sans Serif", "Arial", sans-serif;
+    margin: 0;
+    overflow: hidden;
+}
+
+#desktop {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--gray-bg);
+}
+
+#sidebar {
+    width: 200px;
+    background-color: var(--gray-bg);
+    border-right: 2px solid var(--shadow);
+    padding: 10px;
+    box-shadow: inset 1px 1px var(--highlight), inset -1px -1px var(--shadow);
+}
+
+#city-map {
+    flex-grow: 1;
+    background-color: var(--green-map);
+    position: relative;
+    border: 2px solid var(--shadow);
+    margin: 10px;
+    box-shadow: 2px 2px 0px #000;
+}
+
+#city-canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.tool-btn {
+    width: 100%;
+    margin-bottom: 5px;
+    background-color: var(--gray-bg);
+    border: 2px solid;
+    border-color: var(--highlight) var(--shadow) var(--shadow) var(--highlight);
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.tool-btn:active {
+    border-color: var(--shadow) var(--highlight) var(--highlight) var(--shadow);
+}
+
+#status-window {
+    margin-top: 20px;
+    border: 2px solid var(--shadow);
+    padding: 5px;
+    background: #fff;
+}
+
+#pulse-indicator {
+    width: 20px;
+    height: 20px;
+    background: #0f0;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #0f0;
+}
