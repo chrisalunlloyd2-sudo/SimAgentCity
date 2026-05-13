@@ -13,6 +13,7 @@ from core.registry_bridge import RegistryBridge
 from core.agent_registrar import AgentRegistrar
 from core.telemetry_monitor import TelemetryMonitor
 from core.road_builder import RoadBuilder
+from core.agent_container import AgentContainerManager
 from tools.task_mgr_mini import get_process_summary, kill_process
 
 app = FastAPI(title="SimAgentCity API")
@@ -24,6 +25,7 @@ registry = RegistryBridge()
 registrar = AgentRegistrar(os.path.join(os.getcwd(), "agents_population.json"))
 telemetry = TelemetryMonitor()
 roads = RoadBuilder(WORKSPACE)
+containers = AgentContainerManager(WORKSPACE)
 
 # Mount Frontend
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
@@ -75,9 +77,18 @@ async def move_entity(req: MoveRequest):
 
 @app.post("/mall/register")
 async def register_agent(req: AgentRegisterRequest):
-    """Adds a new agent sim to the population."""
+    """Adds a new agent sim to the population and spawns their physical home."""
     agent = registrar.register_agent(req.name, req.role)
-    return {"status": "SUCCESS", "agent": agent}
+    # Step 201-300: Physical Spawning
+    success, msg = containers.spawn_agent_home(agent["id"])
+    if not success:
+        raise HTTPException(status_code=500, detail=f"Registration failed: {msg}")
+    return {"status": "SUCCESS", "agent": agent, "environment": msg}
+
+@app.get("/mall/agents/stats")
+async def get_agent_storage_stats(agent_id: str):
+    """Checks disk usage of an agent's sandbox."""
+    return containers.get_agent_storage_stats(agent_id)
 
 @app.get("/mall/agents")
 async def get_mall_agents():
