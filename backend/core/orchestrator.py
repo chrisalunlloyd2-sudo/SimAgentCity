@@ -10,9 +10,11 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 try:
     from .os_bridge import OSBridge
     from .llm_client import LLMClient
+    from .file_watcher import CityFileWatcher
 except ImportError:
     from os_bridge import OSBridge
     from llm_client import LLMClient
+    from file_watcher import CityFileWatcher
 
 class AgentCityOrchestrator:
     def __init__(self, workspace_dir):
@@ -22,13 +24,23 @@ class AgentCityOrchestrator:
         self.active_agents = {} # agent_id: status
         self.pulse_rate = 1.2
         self.running = True
-        
+
+        # Step 51-75: Initialize Real-time Watcher
+        self.watcher = CityFileWatcher(workspace_dir, self._on_fs_event)
+        self.watcher.start()
+
         # Start Heartbeat Thread
         self.heartbeat_thread = threading.Thread(target=self._run_heartbeat, daemon=True)
         self.heartbeat_thread.start()
 
+    def _on_fs_event(self, event_type, path):
+        """Callback for file system events."""
+        print(f"[PULSE] FS Event: {event_type} on {path}")
+        # Here we could emit a WebSocket signal to the UI to refresh immediately
+
     def _run_heartbeat(self):
-        """Step 5: The Pulse Handshake implementation."""
+...
+
         while self.running:
             # Sync terminal/UI state
             # self.bridge.get_file_tree()
