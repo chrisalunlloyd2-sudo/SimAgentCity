@@ -42,15 +42,27 @@ async function fetchMallAgents() {
     try {
         const response = await fetch('/mall/agents');
         const data = await response.json();
-        updateEngineEntities(data.agents, 'agent');
+        
+        // Also fetch active status for stamina/xp
+        const activeRes = await fetch('/agents');
+        const activeData = await activeRes.json();
+        
+        // Merge data for rendering
+        const mergedAgents = data.agents.map(a => {
+            const activeInfo = activeData[a.id] || {};
+            return { ...a, active: activeInfo };
+        });
+        
+        updateEngineEntities(mergedAgents, 'agent');
         
         // Update Agent List UI
-        document.getElementById('agent-count').innerText = `Active Population: ${data.agents.length}`;
+        document.getElementById('agent-count').innerText = `Active Population: ${mergedAgents.length}`;
         const listView = document.getElementById('agent-list-view');
-        listView.innerHTML = data.agents.map(a => `
+        listView.innerHTML = mergedAgents.map(a => `
             <div style="border-bottom: 1px dashed #c0c0c0; padding: 5px;">
                 <strong>${a.name}</strong> [${a.role}]<br>
-                Risk: ${a.traits.risk_profile} | Trust: ${a.traits.trust_score} | Budget: §${a.traits.budget_limit}
+                Wallet: <span style="font-size: 10px;">${a.wallet.substring(0, 10)}...</span><br>
+                Stamina: ${a.active.stamina !== undefined ? a.active.stamina : a.traits.stamina}% | Logic: Lvl ${a.traits.logic_level}
             </div>
         `).join('');
     } catch (e) {
@@ -58,18 +70,33 @@ async function fetchMallAgents() {
     }
 }
 
-async function fetchVitals() {
+async function fetchBankLedger() {
     try {
-        const response = await fetch('/vitals');
+        const response = await fetch('/bank/ledger');
         const data = await response.json();
-        if (data.status === 'OFFLINE') return;
         
-        document.getElementById('vit-cpu').innerText = `${data.hardware_bus.city_pollution}%`;
-        document.getElementById('vit-net').innerText = `${data.hardware_bus.city_wind_speed} knots`;
-        document.getElementById('vit-weather').innerText = data.city_weather;
-        document.getElementById('vit-stress').innerText = data.city_stress;
+        document.getElementById('city-funds').innerText = `${data.total_funds.toLocaleString()} PYTHON_COIN`;
+        const ledgerView = document.getElementById('bank-ledger-view');
+        
+        if (data.ledger && data.ledger.length > 0) {
+            ledgerView.innerHTML = data.ledger.map(txn => `
+                <div style="border-bottom: 1px dotted #ccc; padding: 2px; font-family: monospace;">
+                    [${new Date(txn.timestamp * 1000).toLocaleTimeString()}] 
+                    <strong>${txn.sender}</strong> -> <strong>${txn.receiver}</strong>: ${txn.amount} ${txn.currency}<br>
+                    Hash: <span style="color:#808080">${txn.hash.substring(0, 16)}...</span>
+                </div>
+            `).reverse().join('');
+        } else {
+            ledgerView.innerHTML = "<em>No blocks mined yet.</em>";
+        }
     } catch (e) {}
 }
+
+// UI Toggles
+document.getElementById('tool-mall').onclick = () => {
+    const form = document.getElementById('recruitment-form');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+};
 
 function updateEngineEntities(items, type) {
     if (!window.cityEngine) return;
@@ -98,27 +125,6 @@ function updateEngineEntities(items, type) {
     window.cityEngine.entities = [...otherEntities, ...newEntities];
 }
 
-async function fetchBankLedger() {
-    try {
-        const response = await fetch('/bank/ledger');
-        const data = await response.json();
-        
-        document.getElementById('city-funds').innerText = `§ ${data.total_funds.toLocaleString()}`;
-        const ledgerView = document.getElementById('bank-ledger-view');
-        
-        if (data.ledger && data.ledger.length > 0) {
-            ledgerView.innerHTML = data.ledger.map(txn => `
-                <div style="border-bottom: 1px dotted #ccc; padding: 2px;">
-                    [${new Date(txn.timestamp * 1000).toLocaleTimeString()}] 
-                    <strong>${txn.agent}</strong> paid §${txn.cost_coins} for <em>${txn.task}</em> -> <span style="color:green">${txn.status}</span>
-                </div>
-            `).reverse().join('');
-        } else {
-            ledgerView.innerHTML = "<em>No transactions cleared.</em>";
-        }
-    } catch (e) {}
-}
-
 // Step 5: 1.2s Pulse Handshake (JS Side)
 setInterval(() => {
     fetchMap();
@@ -143,15 +149,20 @@ window.onload = () => {
                 win.style.display = 'flex';
                 
                 if (entity.type === 'agent') {
+                    const activeStamina = entity.data.active.stamina !== undefined ? entity.data.active.stamina : entity.data.traits.stamina;
+                    const activeStatus = entity.data.active.status || entity.data.status;
+                    const activeThought = entity.data.active.thought || "Idle";
+                    
                     content.innerHTML = `
                         <strong>Name:</strong> ${entity.name}<br>
-                        <strong>ID:</strong> ${entity.id}<br>
                         <strong>Role:</strong> ${entity.data.role}<br>
-                        <strong>Status:</strong> ${entity.data.status}<br>
+                        <strong>Status:</strong> ${activeStatus}<br>
+                        <strong>Thought:</strong> <em>"${activeThought}"</em><br>
                         <hr>
+                        <strong>Wallet:</strong> <span style="font-size:10px">${entity.data.wallet}</span><br>
+                        <strong>Stamina:</strong> ${activeStamina}%<br>
+                        <strong>Logic Level:</strong> ${entity.data.traits.logic_level}<br>
                         <strong>Risk Profile:</strong> ${entity.data.traits.risk_profile}<br>
-                        <strong>Trust Score:</strong> ${entity.data.traits.trust_score}<br>
-                        <strong>Budget Limit:</strong> §${entity.data.traits.budget_limit}<br>
                     `;
                 } else {
                     content.innerHTML = `

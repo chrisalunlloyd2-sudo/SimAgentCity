@@ -10,12 +10,13 @@ class AgentRegistrar:
                 json.dump([], f)
 
     def register_agent(self, name, role, risk_profile="Balanced", model="h2o-danube3:4b"):
-        """Registers a new agent sim for the population with OpenClaw Traits."""
+        """Registers a new agent sim for the population with Deep Sims Traits."""
         agents = self.get_registered_agents()
         
-        # Hardware-Backed SHA-256 Trust Layer (Simulation)
+        # Hardware-Backed SHA-256 Trust Layer
         raw_id = f"{name}_{role}_{len(agents)}".encode('utf-8')
         sha_id = hashlib.sha256(raw_id).hexdigest()[:12]
+        wallet_address = f"0x{hashlib.sha256(raw_id[::-1]).hexdigest()[:40]}"
         
         # OpenClaw Financial Personalization
         budget_limit = 1000
@@ -30,11 +31,14 @@ class AgentRegistrar:
             "role": role,
             "model": model,
             "status": "IDLE",
+            "wallet": wallet_address,
             "traits": {
                 "risk_profile": risk_profile,
                 "budget_limit": budget_limit,
                 "trust_score": 100,
-                "xp": 0
+                "xp": 0,
+                "stamina": 100,      # Burns during tasks, recovers when IDLE
+                "logic_level": 1     # Affects success rate of processing
             }
         }
         agents.append(new_agent)

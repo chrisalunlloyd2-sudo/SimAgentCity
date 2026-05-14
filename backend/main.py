@@ -69,8 +69,23 @@ async def get_map():
 @app.get("/bank/ledger")
 async def get_bank_ledger():
     """Returns the immutable bank ledger for the Bank Monitor UI."""
-    # Assuming orchestrator has bank_ledger
-    return {"ledger": orchestrator.bank_ledger, "total_funds": 10000 - len(orchestrator.bank_ledger) * 10}
+    ledger_data = []
+    for block in orchestrator.ledger.chain:
+        for txn in block.transactions:
+            ledger_data.append({
+                "hash": block.hash,
+                "timestamp": block.timestamp,
+                "sender": txn["sender"],
+                "receiver": txn["receiver"],
+                "amount": txn["amount"],
+                "currency": txn["currency"],
+                "contract": block.contract_code
+            })
+    
+    # Calculate system treasury
+    system_funds = orchestrator.ledger.get_balance("System", "PYTHON_COIN")
+    
+    return {"ledger": ledger_data, "total_funds": system_funds}
 
 @app.get("/zoning")
 async def get_all_zones():
