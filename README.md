@@ -56,13 +56,19 @@ SimAgentCity is a high-precision autonomous software factory visualized through 
     - [x] **Steps 841-875:** Integrated Agent XP (Experience Points) and priority routing based on historical success.
     - [x] **Mirror Sync Anchor:** Synchronized all physical build files to the user's Desktop (`SimAgentCity_Build`).
 
-- **Phase 10: The Real-Life Hookup (Genesis) (Steps 876 - 900) [ACTIVE]**
-    - [ ] **Steps 876-900:** Final API exposure and Global Stress Test.
+- **Phase 10: The Real-Life Hookup (Genesis) [VERIFIED]**
+    - [x] **Steps 876-880:** Final API exposure and Global Stress Test execution.
+    - [x] **Steps 881-890:** Compiled standalone `.exe` distribution with automatic GUI launch.
+    - [x] **Steps 891-900:** Final "Ghost Scrubbing" and Absolute Order enforcement.
 
 ---
 
 ## III. OPERATIONAL RUNBOOK (City Maintenance)
-... (Standard install instructions move here)
+### 3.1 The Standalone Genesis
+For a game-like experience, run the provided `.exe`:
+1. Navigate to `dist/cli_wrapper.exe`.
+2. Launch with the `LAUNCH_CITY.bat` script.
+3. The system will automatically open your default browser to the Retro UI skyline.
 
 ---
 *MISSION STATUS: SECTOR 3 ACTIVE*
