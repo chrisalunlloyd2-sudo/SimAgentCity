@@ -1,0 +1,16 @@
+# Build Log
+
+## Phase 42: Phase 5 - The God Hand
+- `Create input.js` with isometric coordinate mapping math.
+- `Implement drag-and-drop` logic for grid entities.
+- `Link UI gestures` to backend file movement Action Protocols.
+- `Update bridge.js` to handle physical OS synchronization upon entity drop.
+
+## Phase 41: Isometric Evolution
+- `Update engine.js` with 2:1 isometric projection matrix.
+- `Implement depth-sorting` for entity rendering.
+- `Redefine districts` with perspective-aligned labels.
+
+## Phase 34-40: Part 1 Finalization
+- `Integrated Windows API` telemetry, registry write-access, and real-time watchers.
+- `Implemented Agent Sandboxing` and Process Demolition hooks.

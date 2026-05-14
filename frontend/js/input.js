@@ -1,0 +1,80 @@
+/**
+ * Step 401-450: The God Hand Input Handler
+ * Manages isometric drag-and-drop and entity selection.
+ */
+
+class CityInput {
+    constructor(engine, bridge) {
+        this.engine = engine;
+        this.bridge = bridge;
+        this.draggedEntity = null;
+        this.offset = { x: 0, y: 0 };
+        this.init();
+    }
+
+    // Step 401: Screen-to-Iso Coordinate Transformation
+    screenToIso(screenX, screenY) {
+        const relX = screenX - this.engine.camera.x;
+        const relY = screenY - this.engine.camera.y;
+
+        // Inverse Isometric Matrix
+        // x = (relX / (tileW/2) + relY / (tileH/2)) / 2
+        // y = (relY / (tileH/2) - relX / (tileW/2)) / 2
+        const mapX = Math.floor((relX / (tileW / 2) + relY / (tileH / 2)) / 2);
+        const mapY = Math.floor((relY / (tileH / 2) - relX / (tileW / 2)) / 2);
+
+        return { x: mapX, y: mapY };
+    }
+
+    init() {
+        const canvas = document.getElementById('city-canvas');
+
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            const isoPos = this.screenToIso(mouseX, mouseY);
+
+            // Find entity at tile
+            this.draggedEntity = this.engine.entities.find(ent => ent.x === isoPos.x && ent.y === isoPos.y);
+            
+            if (this.draggedEntity) {
+                console.log(`[GOD_HAND] Grabbing ${this.draggedEntity.name}`);
+                canvas.style.cursor = 'grabbing';
+            }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!this.draggedEntity) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            const isoPos = this.screenToIso(mouseX, mouseY);
+
+            // Update entity position visually (Pre-sync)
+            this.draggedEntity.x = isoPos.x;
+            this.draggedEntity.y = isoPos.y;
+        });
+
+        window.addEventListener('mouseup', (e) => {
+            if (!this.draggedEntity) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            const isoPos = this.screenToIso(mouseX, mouseY);
+
+            console.log(`[GOD_HAND] Dropping ${this.draggedEntity.name} at ${isoPos.x}, ${isoPos.y}`);
+            
+            // Trigger Backend Sync (Phase 2 Action Protocol)
+            this.bridge.syncMovement(this.draggedEntity, isoPos);
+
+            this.draggedEntity = null;
+            canvas.style.cursor = 'default';
+        });
+    }
+}
+
+// Initialized by bridge.js
+window.CityInput = CityInput;

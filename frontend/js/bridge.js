@@ -80,11 +80,42 @@ document.getElementById('tool-mall').onclick = () => {
     form.style.display = form.style.display === 'none' ? 'block' : 'none';
 };
 
+// Initialized by engine.js
+async function fetchMap() {
+...
+}
+
+// Step 451-500: UI Feedback Loop
+async function syncMovement(entity, newIsoPos) {
+    if (entity.type === 'file') {
+        const dest = `moved_${Math.random().toString(36).substring(7)}_${entity.name}`;
+        try {
+            const response = await fetch('/move', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    source: entity.id,
+                    destination: dest
+                })
+            });
+            const data = await response.json();
+            if (data.status === 'SUCCESS') {
+                console.log("[BRIDGE] Physical Move Verified");
+            }
+        } catch (e) {
+            console.error("[BRIDGE] Move Failed", e);
+        }
+    }
+}
+
 // Step 5: 1.2s Pulse Handshake (JS Side)
 setInterval(() => {
-    fetchMap();
-    fetchRegistry();
-    fetchMallAgents();
-    const indicator = document.getElementById('pulse-indicator');
-    indicator.style.opacity = indicator.style.opacity == '1' ? '0.3' : '1';
+...
 }, 1200);
+
+// Link interactions
+window.onload = () => {
+    if (window.cityEngine && window.CityInput) {
+        window.cityInput = new CityInput(window.cityEngine, { syncMovement });
+    }
+};
