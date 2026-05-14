@@ -50,14 +50,31 @@ The city synchronizes with the OS every **1.2 seconds**. A green pulse indicator
 
 ---
 
-## 4. THE ACTION PROTOCOLS (Municipal Code)
+## 4. THE ACTION PROTOCOLS & THE FACTORY FLOOR (Municipal Code)
+The grid operates as a literal, functional assembly line for software generation. The public data pipe acts as the conveyor belt, topological zones are manufacturing stations (compiling, testing, securing), and agents are the autonomous workers.
 - **THE BULLDOZER:** Moving a file to `city_trash` initiates a safe, reversible deletion protocol.
 - **THE ROAD BUILDER:** FTP links are paved as bulk infrastructure (Symlinks).
 - **THE TRANSIT SYSTEM:** TCP is mapped to 'Walking' (Reliable); UDP is mapped to 'Bicycles' (Fast/Nimble).
 
 ---
 
-## 5. DARWINIAN LOGS
+## 5. THE BANK MONITOR & IMMUTABLE TRUST
+By having an independent Bank Monitor overseeing the environment, we decouple transaction logic from the agents.
+- **Zero Spoofing:** An agent can negotiate logic, but cannot unilaterally force a physical transaction. The bank acts as the immutable ledger.
+- **OpenClaw-Style Personalization:** Agents possess dynamic risk profiles and autonomous resource management. The Bank Monitor ensures their actions respect overarching security constraints.
+- **Automated Arbitration:** Ecosystem is self-governing via digital contracts (Escrow Execution, Performance Enforcement, Immutable Context).
+
+---
+
+## 6. LOCAL WEB3 & PRIVATE DePIN
+SimAgentCity anchors its trust layer via a Private Decentralized Physical Infrastructure Network (DePIN).
+- **Hardware-Backed SHA-256 Trust Layer:** Legacy ASIC miners serve as physical Proof-of-Work anchors. A rogue process cannot spoof its way into high-security domains because it cannot mathematically fake the physical hash rate.
+- **Trapping Web3 Locally:** The ledger, contracts, and token economy remain entirely sandboxed. 
+- **SBI (Systemic Behavioral Interpolation):** A global monitor tracking standard transaction volumes. Deviations from the interpolated norm trigger autonomous quarantine protocols.
+
+---
+
+## 7. DARWINIAN LOGS
 **Mutation Rate:** 1.2s per Page.
 **Selection Pressure:** Zero-Yap Adherence, AST Purity, and Physical Path Persistence.
 

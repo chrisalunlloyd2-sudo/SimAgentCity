@@ -7,6 +7,13 @@
     --highlight: #ffffff;
 }
 
+/* Phase 43: The "Absolute Order" Protocol */
+* {
+    transition: none !important;
+    animation: none !important;
+    box-sizing: border-box;
+}
+
 body {
     background-color: #333;
     color: #000;
@@ -42,6 +49,7 @@ body {
 #city-canvas {
     width: 100%;
     height: 100%;
+    image-rendering: pixelated; /* Grid-Locked Alignment */
 }
 
 .tool-btn {
