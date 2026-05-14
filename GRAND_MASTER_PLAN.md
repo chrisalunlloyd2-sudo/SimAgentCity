@@ -1,5 +1,5 @@
-# The 900-Step Grand Master Plan: SimAgentCity "Real Life" Hookup
-**Structure:** 3 Parts, 10 Phases, 900 Steps (Aggregated for Strategic Execution)
+# The 1200-Step Grand Master Plan: SimAgentCity "Real Life" Hookup
+**Structure:** 4 Parts, 12 Phases, 1200 Steps (Aggregated for Strategic Execution)
 
 ---
 
@@ -63,97 +63,28 @@
 
 ---
 
+## PART 4: THE DECENTRALIZED FOUNDRY (Steps 901 - 1200)
+*Focus: Anchoring the city to a Private DePIN and localized Web3 Trust Layer.*
+
+### Phase 11: The Web3 Trap & DePIN (Steps 901 - 1050)
+- **901-925:** **Hardware-Backed SHA-256 Trust Layer.** Integrate legacy SHA-256 ASIC miner telemetry as physical Proof-of-Work anchors for the local trust graph.
+- **926-950:** **Local Trust Coins.** Implement the "City Mint" to issue language-domain tokens (Python Coins, C++ Coins) based on verified computational work.
+- **951-975:** **The Immutable Contract Ledger.** Implement localized smart contracts that bind agents to performance benchmarks.
+- **976-1000:** **Escrow & Arbitration.** Develop the autonomous arbitration logic where the Bank Monitor holds funds in escrow until contract conditions are cryptographically verified.
+- **1001-1050:** **SBI (Systemic Behavioral Interpolation).** Implement the "Interpol" layer to track agent travel patterns and quarantine anomalous logic before leaks occur.
+
+### Phase 12: Automated Arbitration & Social Ecosystem (Steps 1051 - 1200)
+- **1051-1075:** **Forum Coin Meritocracy.** Tokenize the developer forums to isolate language-specific voting weights.
+- **1076-1100:** **PII "Ghost" Scrubbing v2.** Deep topological learning from diffs to automatically anonymize house-made code against global standards.
+- **1101-1125:** **Multi-Layer Policy Compliance.** Specialized routing through jurisdictional nodes to enforce international data laws (EU-Anonymization, etc).
+- **1126-1150:** **Timescale RAG Memory.** Integrate sensory-agnostic efficient memory to retain historical context and architectural preferences without babysitting.
+- **1151-1175:** **Autonomous Process Improvement.** "Cross-breed" genetic SOPs with efficient GitHub topological shifts to eliminate compilation bottlenecks.
+- **1176-1200:** **Final Swarm Release.** The 16-hour swarm now transacts, negotiates, and self-heals across a decentralized, hardware-secured digital economy.
+
+---
+
 ## APPENDIX A: THE 80-STEP GATEWAY COUNCILS
 *The rigid, immutable checkpoints ensuring all deployed code is pure, secure, and visually crystalline.*
 
 ### I. The 20-Step "Ghost" Scrubbing Protocol (Sanitation Zone)
-*Executed during spin-up to strip logic of creator fingerprints.*
-1. **Registry Decoupling:** Detach code from local machine SID/GUIDs.
-2. **IP Neutralization:** Replace internal/external IPs with topological placeholders (e.g., City_Gate_01).
-3. **Variable Generalization:** Rename personalized variables to project-agnostic schemas.
-4. **Path Anonymization:** Scrub absolute file paths referencing local Islands/user directories.
-5. **Metadata Stripping:** Wipe EXIF, compiler timestamps, and user-agent strings.
-6. **MAC Address Masking:** Replace physical hardware IDs with virtualized hash-anchored IDs.
-7. **Nominal Data Purge:** Remove names, emails, or plaintext human identifiers.
-8. **Comment Sanitization:** Strip internal notes hinting at private infrastructure.
-9. **Credential Vacuuming:** Redact accidental hardcoded API keys or secret tokens.
-10. **Environment Variable Hiding:** Convert `.env` patterns to generic templates.
-11. **Network Topology Cloaking:** Obfuscate the layout of NAS/Miners.
-12. **SSH/Key Signature Removal:** Purge public/private key fragments.
-13. **Log File Truncation:** Ensure previous debug logs are omitted from builds.
-14. **Process ID (PID) Normalization:** Standardize PIDs to prevent environment fingerprinting.
-15. **OS Fingerprint Scrubbing:** Remove flags identifying specific OS builds or kernels.
-16. **Timezone Standardization:** Set logic to UTC to hide physical location.
-17. **Dependency Tree Flattening:** Remove references to private, non-public libraries.
-18. **Instruction Trace Cleansing:** Scrub low-level processor-specific optimization flags.
-19. **Artifact Indexing:** Create a "Scrub Log" stored in the private vault.
-20. **Final SHA-256 Seal:** Hash the scrubbed state; if a single private byte remains, the seal breaks.
-
-### II. The 20-Step Security Council Approval
-*High-trust agents + SHA-256 hash power validating the "Trapped Web3" integrity.*
-1. **Vulnerability Scan:** Automated check for known CVEs.
-2. **Logic Leak Check:** Ensure code cannot "call home" outside the local trap.
-3. **Gas/Resource Audit:** Verify contracts lack infinite loops that drain the DePIN.
-4. **Signature Verification:** Confirm code signed by a high-trust SHA-256 node.
-5. **Sandbox Escape Test:** Verify agents cannot access the underlying host OS.
-6. **Trust-Score Cross-Reference:** Ensure involved agents have required forum merit.
-7. **Encryption Strength Audit:** Confirm 256-bit layer is properly implemented.
-8. **Port Access Review:** Ensure only authorized topological "Ports" are open.
-9. **Input Fuzzing:** Brute-force inputs to ensure stability.
-10. **Escrow Logic Check:** Verify the Bank Monitor can release/hold funds safely.
-11. **Consensus Quorum Check:** Verify 51%+ of the Security Circle approves the build.
-12. **Backdoor Hunt:** Scan for unauthorized "Admin" entry points.
-13. **Collision Resistance Test:** Ensure SHA-256 IDs don't overlap.
-14. **Data-at-Rest Audit:** Verify local storage mechanics.
-15. **Data-in-Transit Audit:** Verify encryption on the public pipe.
-16. **Access Control List (ACL) Check:** Verify permissions in the UI.
-17. **Dead-Code Analysis:** Remove bloat acting as a potential security vector.
-18. **Identity Persistence Check:** Ensure agent IDs don't morph during execution.
-19. **State Rollback Test:** Ensure crash recovery without data loss.
-20. **Genesis Block Integration:** Mint final version into the local Web3 ledger.
-
-### III. The 20-Step Ethics & Advisory Council (Customs Checkpoint)
-*Human-centric heuristics ensuring the app "plays nice" in the real world.*
-1. **Bias Detection:** Scan algorithms for discriminatory logic.
-2. **Global Policy Alignment:** Cross-reference GitHub-sourced country rules.
-3. **User Data Sovereignty:** Ensure UI gives users control.
-4. **Nominal Test Data Validation:** Verify "public" data is truly generic.
-5. **Incentive Alignment:** Ensure coins don't encourage spam behavior.
-6. **Accessibility Compliance:** Verify UI is friendly to screen readers and BVD needs.
-7. **Transparency Indexing:** Auto-generate human-readable summaries.
-8. **Consent Flow Audit:** Ensure polling/voting systems are explicit.
-9. **Sustainability Check:** Verify SHA-256 mining isn't wasteful.
-10. **Deception Check:** Ensure agents identify as AI.
-11. **Jurisdictional Routing:** Verify app knows which country's ethics it follows.
-12. **Algorithmic Accountability:** Ensure decisions trace back to an SOP.
-13. **Community Impact Assessment:** Predict effects on forum economy.
-14. **Disruption Mitigation:** Ensure app respects existing topological rules.
-15. **Feedback Loop Integrity:** Verify users can flag unethical behavior.
-16. **Safety Valve Verification:** Confirm Master Kill-Switch functionality.
-17. **Resource Fair-Use:** Ensure app doesn't hog the shared data pipe.
-18. **Open-Source Attribution:** Ensure external genetic material is credited.
-19. **Advisory Consensus:** The Council votes on "Moral Fitness".
-20. **Public Release Authorization:** Final green light for the payload.
-
-### IV. The 20-Step "Absolute Order" Protocol
-*The final polish ensuring the system is visually harmonious and logically crystalline.*
-1. **Grid-Locked Alignment:** Every UI element snaps to a strict mathematical grid. No floating windows.
-2. **Monosemantic Labeling:** One word, one meaning. Replace jargon with literal labels (e.g., "Submit" -> "Execute_Contract").
-3. **High-Contrast Stability:** Palette locked to high-contrast, flicker-free colors to prevent eye strain.
-4. **Information Saliency Filtering:** Hide 90% of noise; surface only the critical 10%.
-5. **Deterministic Color-Coding:** Green = 100% Verified; Red = 0% Trust. No gradients.
-6. **Symmetrical Topology:** City layout must be balanced.
-7. **Zero-Motion Interface:** All transitions are instant. No sliding animations or smooth scrolling.
-8. **Single Source of Truth Index:** One master manifest listing every file. No "misc" folders.
-9. **Binary Status Indicators:** "On/Off", "Complete/Pending". No loader bars without exact percentages.
-10. **Font Uniformity:** Single, highly legible monospace font across all domains.
-11. **Hierarchy Flattening:** Max three clicks to reach data. Re-zone if deeper.
-12. **Redundancy Scrub:** Delete duplicate notifications across layers.
-13. **Literal Pathing:** File structures follow the topological map exactly.
-14. **Categorical Isolation:** Industrial Processes never share visual space. Strict borders.
-15. **Predictive Layout Persistence:** Elements never move (e.g., Bank Monitor stays top-right).
-16. **Constraint Validation:** Adherence to "Perfection Heuristic"—messy code is refactored before viewing.
-17. **Acoustic/Visual Silence:** No pop-ups or "Helpful Hints". System speaks only when a gate is blocked.
-18. **Standardized Units:** Consistent measurements across all cities and islands.
-19. **Contextual Anchoring:** "You are here" breadcrumbs on every screen.
-20. **The Final "OCD" Audit:** The ultimate visual and logical crystalline check.
+...
