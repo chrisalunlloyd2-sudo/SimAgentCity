@@ -5,6 +5,7 @@
     --green-map: #008000;
     --shadow: #808080;
     --highlight: #ffffff;
+    --dark-shadow: #404040;
 }
 
 /* Phase 43: The "Absolute Order" Protocol */
@@ -15,7 +16,7 @@
 }
 
 body {
-    background-color: #333;
+    background-color: var(--green-map);
     color: #000;
     font-family: "MS Sans Serif", "Arial", sans-serif;
     margin: 0;
@@ -23,27 +24,145 @@ body {
 }
 
 #desktop {
-    display: flex;
     width: 100vw;
     height: 100vh;
-    background-color: var(--gray-bg);
+    position: relative;
 }
 
-#sidebar {
-    width: 200px;
+/* Windows 95 Window Styling */
+.win95-window {
+    position: absolute;
     background-color: var(--gray-bg);
-    border-right: 2px solid var(--shadow);
+    border: 2px solid;
+    border-color: var(--highlight) var(--dark-shadow) var(--dark-shadow) var(--highlight);
+    box-shadow: 1px 1px 0px var(--shadow) inset, -1px -1px 0px var(--highlight) inset;
+    width: 350px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+.win95-panel {
+    position: absolute;
+    background-color: var(--gray-bg);
+    border: 2px solid;
+    border-color: var(--highlight) var(--dark-shadow) var(--dark-shadow) var(--highlight);
+    z-index: 50;
+}
+
+.win95-titlebar {
+    background-color: var(--blue-header);
+    color: white;
+    font-weight: bold;
+    padding: 3px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+}
+
+.win95-close {
+    background-color: var(--gray-bg);
+    border: 2px solid;
+    border-color: var(--highlight) var(--dark-shadow) var(--dark-shadow) var(--highlight);
+    font-weight: bold;
+    font-family: monospace;
+    cursor: pointer;
+    padding: 0px 4px;
+}
+
+.win95-close:active {
+    border-color: var(--dark-shadow) var(--highlight) var(--highlight) var(--dark-shadow);
+}
+
+.win95-content {
     padding: 10px;
-    box-shadow: inset 1px 1px var(--highlight), inset -1px -1px var(--shadow);
+}
+
+.win95-btn {
+    background-color: var(--gray-bg);
+    border: 2px solid;
+    border-color: var(--highlight) var(--dark-shadow) var(--dark-shadow) var(--highlight);
+    padding: 5px 10px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.win95-btn:active {
+    border-color: var(--dark-shadow) var(--highlight) var(--highlight) var(--dark-shadow);
+}
+
+fieldset {
+    border: 2px solid var(--shadow);
+    border-radius: 0;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+legend {
+    color: #000;
+}
+
+input, select {
+    width: 100%;
+    margin-bottom: 5px;
+    border: 2px inset #fff;
+    padding: 3px;
+    font-family: inherit;
+}
+
+/* SimCity Toolbar */
+#sim-toolbar {
+    top: 20px;
+    left: 10px;
+    width: 60px;
+}
+
+.tool-grid {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.tool-btn.icon-btn {
+    font-size: 20px;
+    padding: 5px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.tool-btn.active-tool {
+    border-color: var(--dark-shadow) var(--highlight) var(--highlight) var(--dark-shadow);
+    background-color: #e0e0e0;
+}
+
+/* Taskbar */
+#taskbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    background-color: var(--gray-bg);
+    border-top: 2px solid var(--highlight);
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    z-index: 200;
+}
+
+.taskbar-item {
+    margin-left: 5px;
+    font-weight: bold;
 }
 
 #city-map {
-    flex-grow: 1;
-    background-color: var(--green-map);
-    position: relative;
-    border: 2px solid var(--shadow);
-    margin: 10px;
-    box-shadow: 2px 2px 0px #000;
+    width: 100%;
+    height: calc(100% - 30px); /* Leave room for taskbar */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
 }
 
 #city-canvas {
@@ -52,32 +171,9 @@ body {
     image-rendering: pixelated; /* Grid-Locked Alignment */
 }
 
-.tool-btn {
-    width: 100%;
-    margin-bottom: 5px;
-    background-color: var(--gray-bg);
-    border: 2px solid;
-    border-color: var(--highlight) var(--shadow) var(--shadow) var(--highlight);
-    padding: 10px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.tool-btn:active {
-    border-color: var(--shadow) var(--highlight) var(--highlight) var(--shadow);
-}
-
-#status-window {
-    margin-top: 20px;
-    border: 2px solid var(--shadow);
-    padding: 5px;
-    background: #fff;
-}
-
 #pulse-indicator {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     background: #0f0;
-    border-radius: 50%;
-    box-shadow: 0 0 5px #0f0;
+    border: 2px inset #fff;
 }

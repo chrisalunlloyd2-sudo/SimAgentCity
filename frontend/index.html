@@ -3,36 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SimAgentCity v1.0</title>
+    <title>SimAgentCity v1.2</title>
     <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
     <div id="desktop">
-        <div id="sidebar">
-            <div class="tool-group">
-                <h3>CITY TOOLS</h3>
-                <button class="tool-btn" id="tool-miner">MINER</button>
-                <button class="tool-btn" id="tool-proc">PROCESSOR</button>
-                <button class="tool-btn" id="tool-ship">SHIPPER</button>
-                <button class="tool-btn" id="tool-mall">AGENT MALL</button>
-                <button class="tool-btn" id="tool-registry">REGISTRY</button>
+        
+        <!-- Floating SimCity Toolbar -->
+        <div id="sim-toolbar" class="win95-panel">
+            <div class="win95-titlebar">TOOLS</div>
+            <div class="tool-grid">
+                <button class="tool-btn icon-btn" id="tool-bulldoze" title="Bulldozer">🚜</button>
+                <button class="tool-btn icon-btn" id="tool-zone-mine" title="Zone: Mining">🟨</button>
+                <button class="tool-btn icon-btn" id="tool-zone-proc" title="Zone: Processing">🟦</button>
+                <button class="tool-btn icon-btn" id="tool-zone-ind" title="Zone: Industrial">🟪</button>
+                <button class="tool-btn icon-btn" id="tool-query" title="Agent Inspector">🔍</button>
             </div>
-            <div id="status-window">
-                <h3>PULSE STATUS</h3>
+        </div>
+
+        <!-- Taskbar / Start Menu Area -->
+        <div id="taskbar">
+            <button class="win95-btn" id="btn-start" style="font-weight: bold;">⊞ Start</button>
+            <button class="win95-btn taskbar-item" onclick="toggleWindow('win-mall')">Agent Mall</button>
+            <button class="win95-btn taskbar-item" onclick="toggleWindow('win-bank')">Bank Monitor</button>
+            <button class="win95-btn taskbar-item" onclick="toggleWindow('win-vitals')">Hardware Bus</button>
+            <div id="pulse-indicator-container" style="margin-left: auto; display: flex; align-items: center; padding-right: 10px;">
+                <span style="margin-right: 5px;">PULSE:</span>
                 <div id="pulse-indicator"></div>
-                <p id="agent-count">Agents: 0</p>
-                <div id="recruitment-form" style="display:none; border-top: 1px solid #808080; margin-top: 10px; padding-top: 5px;">
-                    <h4>RECRUIT SIM</h4>
-                    <input type="text" id="reg-name" placeholder="Agent Name" style="width: 80%;">
-                    <select id="reg-role" style="width: 85%; margin: 5px 0;">
-                        <option value="Miner">Miner</option>
-                        <option value="Processor">Processor</option>
-                        <option value="Shipper">Shipper</option>
-                    </select>
-                    <button class="tool-btn" onclick="recruitAgent()">RECRUIT</button>
+            </div>
+        </div>
+
+        <!-- Windows -->
+        
+        <!-- Agent Mall Window -->
+        <div class="win95-window" id="win-mall" style="top: 50px; left: 100px; display: none;">
+            <div class="win95-titlebar">
+                <span>Agent Mall - Recruitment Center</span>
+                <button class="win95-close" onclick="toggleWindow('win-mall')">X</button>
+            </div>
+            <div class="win95-content">
+                <div class="recruitment-form">
+                    <fieldset>
+                        <legend>OpenClaw Agent Profile Configuration</legend>
+                        <input type="text" id="reg-name" placeholder="Agent Name">
+                        <select id="reg-role">
+                            <option value="Miner">Miner (Extraction)</option>
+                            <option value="Processor">Processor (Analysis)</option>
+                            <option value="Shipper">Shipper (Logistics)</option>
+                        </select>
+                        <label>Risk Profile (Financial):</label>
+                        <select id="reg-risk">
+                            <option value="Aggressive">Aggressive (High ROI/Spend)</option>
+                            <option value="Conservative">Conservative (Treasury)</option>
+                            <option value="Balanced">Balanced</option>
+                        </select>
+                        <button class="win95-btn" onclick="recruitAgent()">RECRUIT AGENT</button>
+                    </fieldset>
+                </div>
+                <hr>
+                <p id="agent-count" style="font-weight:bold;">Active Population: 0</p>
+                <div id="agent-list-view" style="height: 150px; overflow-y: scroll; border: 2px inset #fff;">
+                    <!-- Agent list populated here -->
                 </div>
             </div>
         </div>
+
+        <!-- Bank Monitor Window -->
+        <div class="win95-window" id="win-bank" style="top: 100px; left: 400px; display: none;">
+            <div class="win95-titlebar">
+                <span>Bank Monitor - Immutable Ledger</span>
+                <button class="win95-close" onclick="toggleWindow('win-bank')">X</button>
+            </div>
+            <div class="win95-content">
+                <fieldset>
+                    <legend>City Treasury</legend>
+                    <div style="font-size: 24px; font-weight: bold; text-align: center; color: green;" id="city-funds">§ 10,000</div>
+                </fieldset>
+                <fieldset>
+                    <legend>Escrow & Transactions (Zero Spoofing)</legend>
+                    <div id="bank-ledger-view" style="height: 200px; overflow-y: scroll; border: 2px inset #fff; font-family: monospace; font-size: 12px; background: #fff;">
+                        <!-- Ledger entries here -->
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <!-- Hardware Bus / Vitals Window -->
+        <div class="win95-window" id="win-vitals" style="top: 20px; left: 700px; display: none;">
+            <div class="win95-titlebar">
+                <span>Hardware Bus Telemetry</span>
+                <button class="win95-close" onclick="toggleWindow('win-vitals')">X</button>
+            </div>
+            <div class="win95-content">
+                <fieldset>
+                    <legend>Metabolism</legend>
+                    <p>Pollution (CPU): <span id="vit-cpu">0%</span></p>
+                    <p>Wind Speed (Net): <span id="vit-net">0 kbps</span></p>
+                    <p>Weather: <span id="vit-weather">CALM</span></p>
+                    <p>Stress: <span id="vit-stress">HEALTHY</span></p>
+                </fieldset>
+            </div>
+        </div>
+        
+        <!-- Agent Inspector (Query Tool) -->
+        <div class="win95-window" id="win-inspector" style="top: 300px; left: 100px; display: none; width: 300px;">
+            <div class="win95-titlebar">
+                <span>Agent Inspector</span>
+                <button class="win95-close" onclick="document.getElementById('win-inspector').style.display='none'">X</button>
+            </div>
+            <div class="win95-content" id="inspector-content">
+                Select an agent using the Query Tool.
+            </div>
+        </div>
+
         <div id="city-map">
             <canvas id="city-canvas"></canvas>
         </div>
@@ -40,5 +123,6 @@
     <script src="static/js/engine.js"></script>
     <script src="static/js/input.js"></script>
     <script src="static/js/bridge.js"></script>
+    <script src="static/js/gui.js"></script>
 </body>
 </html>

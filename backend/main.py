@@ -50,6 +50,7 @@ class RegistryUpdateRequest(BaseModel):
 class AgentRegisterRequest(BaseModel):
     name: str
     role: str
+    risk_profile: str = "Balanced"
 
 class ZoneUpdateRequest(BaseModel):
     x: int
@@ -60,6 +61,12 @@ class ZoneUpdateRequest(BaseModel):
 async def get_map():
     """Returns the city file topology."""
     return {"files": orchestrator.bridge.get_file_tree()}
+
+@app.get("/bank/ledger")
+async def get_bank_ledger():
+    """Returns the immutable bank ledger for the Bank Monitor UI."""
+    # Assuming orchestrator has bank_ledger
+    return {"ledger": orchestrator.bank_ledger, "total_funds": 10000 - len(orchestrator.bank_ledger) * 10}
 
 @app.get("/zoning")
 async def get_all_zones():
@@ -96,7 +103,7 @@ async def move_entity(req: MoveRequest):
 @app.post("/mall/register")
 async def register_agent(req: AgentRegisterRequest):
     """Adds a new agent sim to the population and spawns their physical home."""
-    agent = registrar.register_agent(req.name, req.role)
+    agent = registrar.register_agent(req.name, req.role, req.risk_profile)
     # Step 201-300: Physical Spawning
     success, msg = containers.spawn_agent_home(agent["id"])
     if not success:

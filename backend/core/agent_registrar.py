@@ -1,5 +1,6 @@
 import json
 import os
+import hashlib
 
 class AgentRegistrar:
     def __init__(self, storage_path):
@@ -8,15 +9,33 @@ class AgentRegistrar:
             with open(self.storage_path, "w") as f:
                 json.dump([], f)
 
-    def register_agent(self, name, role, model="h2o-danube3:4b"):
-        """Registers a new agent sim for the population."""
+    def register_agent(self, name, role, risk_profile="Balanced", model="h2o-danube3:4b"):
+        """Registers a new agent sim for the population with OpenClaw Traits."""
         agents = self.get_registered_agents()
+        
+        # Hardware-Backed SHA-256 Trust Layer (Simulation)
+        raw_id = f"{name}_{role}_{len(agents)}".encode('utf-8')
+        sha_id = hashlib.sha256(raw_id).hexdigest()[:12]
+        
+        # OpenClaw Financial Personalization
+        budget_limit = 1000
+        if risk_profile == "Aggressive":
+            budget_limit = 5000
+        elif risk_profile == "Conservative":
+            budget_limit = 200
+
         new_agent = {
-            "id": f"agent_{len(agents) + 1}",
+            "id": f"agent_{sha_id}",
             "name": name,
             "role": role,
             "model": model,
-            "status": "IDLE"
+            "status": "IDLE",
+            "traits": {
+                "risk_profile": risk_profile,
+                "budget_limit": budget_limit,
+                "trust_score": 100,
+                "xp": 0
+            }
         }
         agents.append(new_agent)
         with open(self.storage_path, "w") as f:
