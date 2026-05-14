@@ -11,17 +11,20 @@ try:
     from .os_bridge import OSBridge
     from .hive_mind_router import HiveMindRouter
     from .file_watcher import CityFileWatcher
+    from .self_corrector import AgentSelfCorrector
 except ImportError:
     from os_bridge import OSBridge
     from hive_mind_router import HiveMindRouter
     from file_watcher import CityFileWatcher
+    from self_corrector import AgentSelfCorrector
 
 class AgentCityOrchestrator:
     def __init__(self, workspace_dir):
         self.bridge = OSBridge(workspace_dir)
         self.hive = HiveMindRouter()
+        self.corrector = AgentSelfCorrector(self.hive)
         self.task_queue = queue.Queue()
-        self.active_agents = {} # agent_id: {status, thought}
+        self.active_agents = {} # agent_id: {status, thought, xp}
         self.pulse_rate = 1.2
         self.running = True
 
@@ -86,10 +89,8 @@ class AgentCityOrchestrator:
             self.active_agents[agent_id] = {"status": "ERROR", "thought": str(e)}
             return False
 
-    def _execute_agent_flow(self, task_data):
-...
-
-
+    def _run_heartbeat(self):
+        """Step 5: The Pulse Handshake implementation."""
         while self.running:
             # Sync terminal/UI state
             # self.bridge.get_file_tree()
@@ -117,7 +118,10 @@ class AgentCityOrchestrator:
         fpath = task_data["file"]
         desc = task_data["task"]
         
-        self.active_agents[aid] = {"status": "PROCESSING", "thought": "Analyzing terrain..."}
+        if aid not in self.active_agents:
+            self.active_agents[aid] = {"status": "IDLE", "thought": "Awaiting orders.", "xp": 0}
+
+        self.active_agents[aid].update({"status": "PROCESSING", "thought": "Analyzing terrain..."})
         
         # 1. READ (Mine)
         full_path = os.path.join(self.bridge.root_dir, fpath)
@@ -132,6 +136,9 @@ class AgentCityOrchestrator:
             res = self.hive.route_task(f"Process this file: {desc}\n\nContent:\n{content}", complexity="SMART")
             result = res.get("response", "")
             
+            if res.get("status") != "SUCCESS" and res.get("status") is not None: # Handle partial router status
+                raise Exception(f"Neural Router Failure: {res.get('status')}")
+
             # 3. WRITE (Box)
             dest_path = f"processed/agent_{aid}_{os.path.basename(fpath)}"
             final_dest = os.path.join(self.bridge.root_dir, dest_path)
@@ -142,9 +149,15 @@ class AgentCityOrchestrator:
             # 4. MOVE (Ship)
             self.bridge.move_file(fpath, f"history/{os.path.basename(fpath)}")
             
-            self.active_agents[aid] = {"status": "IDLE", "thought": "Mission complete."}
+            # Step 841-875: Increment XP
+            self.active_agents[aid]["xp"] = self.active_agents[aid].get("xp", 0) + 10
+            self.active_agents[aid].update({"status": "IDLE", "thought": "Mission complete. Gained 10 XP."})
+
         except Exception as e:
-            self.active_agents[aid] = {"status": "ERROR", "thought": str(e)}
+            # Phase 9: Self-Correction Loop (Steps 801-840)
+            hyp = self.corrector.analyze_failure(aid, desc, str(e))
+            self.active_agents[aid].update({"status": "RECOVERY", "thought": f"FAILED: {hyp}"})
+            print(f"[CRITICAL] {aid} entering Darwinian recovery loop.")
 
 if __name__ == "__main__":
     import os
@@ -152,7 +165,7 @@ if __name__ == "__main__":
     sys.path.append(os.path.dirname(os.path.abspath(__file__)))
     print("Testing Orchestrator logic...")
     from os_bridge import OSBridge
-    from llm_client import LLMClient
+    from hive_mind_router import HiveMindRouter
     
     orch = AgentCityOrchestrator("./test_orch")
     print("Orchestrator Heartbeat Active.")
