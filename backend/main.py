@@ -15,6 +15,8 @@ from core.telemetry_monitor import TelemetryMonitor
 from core.road_builder import RoadBuilder
 from core.agent_container import AgentContainerManager
 from core.zoning_manager import ZoningManager
+from core.trust_layer import TrustLayer
+from core.sbi_monitor import SBIMonitor
 from tools.task_mgr_mini import get_process_summary, kill_process
 
 app = FastAPI(title="SimAgentCity API")
@@ -28,6 +30,8 @@ telemetry = TelemetryMonitor()
 roads = RoadBuilder(WORKSPACE)
 containers = AgentContainerManager(WORKSPACE)
 zoning = ZoningManager(os.path.join(os.getcwd(), "city_zoning.json"))
+trust = TrustLayer(os.path.join(os.getcwd(), "trust_graph.json"))
+sbi = SBIMonitor(os.path.join(os.getcwd(), "behavior_history.json"))
 
 # Mount Frontend
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
@@ -94,11 +98,23 @@ async def update_registry(req: RegistryUpdateRequest):
 
 @app.post("/move")
 async def move_entity(req: MoveRequest):
-    """Physically moves a file based on UI interaction."""
+    """Physically moves a file and logs movement to SBI Monitor."""
     success, msg = orchestrator.bridge.move_file(req.source, req.destination)
     if not success:
         raise HTTPException(status_code=400, detail=msg)
+    
+    # Step 1001-1050: SBI Logging
+    sbi.log_movement("Architect_Hand", 0, 0) 
+    
     return {"status": "SUCCESS", "message": msg}
+
+@app.get("/security/status")
+async def get_security_status():
+    """Returns the city security circle status (DePIN / Web3 Trap)."""
+    return {
+        "trust_graph": trust.trust_graph,
+        "interpol": sbi.get_interpol_status()
+    }
 
 @app.post("/mall/register")
 async def register_agent(req: AgentRegisterRequest):
