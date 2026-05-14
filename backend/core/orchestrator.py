@@ -9,17 +9,17 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 try:
     from .os_bridge import OSBridge
-    from .llm_client import LLMClient
+    from .hive_mind_router import HiveMindRouter
     from .file_watcher import CityFileWatcher
 except ImportError:
     from os_bridge import OSBridge
-    from llm_client import LLMClient
+    from hive_mind_router import HiveMindRouter
     from file_watcher import CityFileWatcher
 
 class AgentCityOrchestrator:
     def __init__(self, workspace_dir):
         self.bridge = OSBridge(workspace_dir)
-        self.llm = LLMClient()
+        self.hive = HiveMindRouter()
         self.task_queue = queue.Queue()
         self.active_agents = {} # agent_id: status
         self.pulse_rate = 1.2
@@ -68,7 +68,7 @@ class AgentCityOrchestrator:
         fpath = task_data["file"]
         desc = task_data["task"]
         
-        self.active_agents[aid] = "PROCESSING"
+        self.active_agents[aid] = {"status": "PROCESSING", "thought": "Analyzing terrain..."}
         
         # 1. READ (Mine)
         full_path = os.path.join(self.bridge.root_dir, fpath)
@@ -76,8 +76,12 @@ class AgentCityOrchestrator:
             with open(full_path, "r", encoding="utf-8") as f:
                 content = f.read()
             
-            # 2. PROCESS (LLM)
-            result, status = self.llm.process_file_task(content, desc)
+            # Step 651-700: Update Thought
+            self.active_agents[aid]["thought"] = self.hive.generate_chat_bubble(aid, "Worker", "Data Extraction")
+
+            # 2. PROCESS (Neural Route)
+            res = self.hive.route_task(f"Process this file: {desc}\n\nContent:\n{content}", complexity="SMART")
+            result = res.get("response", "")
             
             # 3. WRITE (Box)
             dest_path = f"processed/agent_{aid}_{os.path.basename(fpath)}"
@@ -87,12 +91,11 @@ class AgentCityOrchestrator:
                 f.write(result)
             
             # 4. MOVE (Ship)
-            # In the physical SIM, the file moves from root to 'processed'
             self.bridge.move_file(fpath, f"history/{os.path.basename(fpath)}")
             
-            self.active_agents[aid] = "IDLE"
+            self.active_agents[aid] = {"status": "IDLE", "thought": "Mission complete."}
         except Exception as e:
-            self.active_agents[aid] = f"ERROR: {str(e)}"
+            self.active_agents[aid] = {"status": "ERROR", "thought": str(e)}
 
 if __name__ == "__main__":
     import os
