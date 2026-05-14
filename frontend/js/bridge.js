@@ -108,9 +108,37 @@ async function syncMovement(entity, newIsoPos) {
     }
 }
 
+async function fetchZones() {
+    try {
+        const response = await fetch('/zoning');
+        const data = await response.json();
+        if (window.cityEngine) window.cityEngine.zones = data;
+    } catch (e) {
+        console.error("Zoning Link Failed", e);
+    }
+}
+
+async function updateZone(x, y, zoneType) {
+    try {
+        await fetch('/zoning/update', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({x, y, zone_type: zoneType})
+        });
+        fetchZones();
+    } catch (e) {
+        console.error("Zone Update Failed", e);
+    }
+}
+
 // Step 5: 1.2s Pulse Handshake (JS Side)
 setInterval(() => {
-...
+    fetchMap();
+    fetchRegistry();
+    fetchMallAgents();
+    fetchZones();
+    const indicator = document.getElementById('pulse-indicator');
+    indicator.style.opacity = indicator.style.opacity == '1' ? '0.3' : '1';
 }, 1200);
 
 // Link interactions

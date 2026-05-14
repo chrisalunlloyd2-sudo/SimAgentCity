@@ -11,7 +11,14 @@ const gridColor = 'rgba(0, 100, 0, 0.5)';
 class CityEngine {
     constructor() {
         this.entities = []; // {x, y, type, id, name, color}
+        this.zones = {}; // "x,y": zone_type
         this.camera = { x: canvas.width / 2, y: 50 };
+        this.zoneColors = {
+            "MINING": "rgba(255, 255, 0, 0.2)",
+            "PROCESSING": "rgba(0, 255, 255, 0.2)",
+            "INDUSTRIAL": "rgba(255, 0, 255, 0.2)",
+            "RESIDENTIAL": "rgba(0, 255, 0, 0.1)"
+        };
         this.init();
     }
 
@@ -37,6 +44,24 @@ class CityEngine {
         ctx.strokeStyle = gridColor;
         ctx.lineWidth = 1;
         const gridSize = 20;
+
+        // Step 501-550: Zone Overlay Rendering
+        for (let x = 0; x < gridSize; x++) {
+            for (let y = 0; y < gridSize; y++) {
+                const zone = this.zones[`${x},${y}`];
+                if (zone) {
+                    const pos = this.isoToScreen(x, y);
+                    ctx.fillStyle = this.zoneColors[zone] || this.zoneColors["RESIDENTIAL"];
+                    ctx.beginPath();
+                    ctx.moveTo(pos.x, pos.y - tileH/2);
+                    ctx.lineTo(pos.x + tileW/2, pos.y);
+                    ctx.lineTo(pos.x, pos.y + tileH/2);
+                    ctx.lineTo(pos.x - tileW/2, pos.y);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+            }
+        }
 
         for (let x = 0; x <= gridSize; x++) {
             let start = this.isoToScreen(x, 0);

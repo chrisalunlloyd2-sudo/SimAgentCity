@@ -14,6 +14,7 @@ from core.agent_registrar import AgentRegistrar
 from core.telemetry_monitor import TelemetryMonitor
 from core.road_builder import RoadBuilder
 from core.agent_container import AgentContainerManager
+from core.zoning_manager import ZoningManager
 from tools.task_mgr_mini import get_process_summary, kill_process
 
 app = FastAPI(title="SimAgentCity API")
@@ -26,6 +27,7 @@ registrar = AgentRegistrar(os.path.join(os.getcwd(), "agents_population.json"))
 telemetry = TelemetryMonitor()
 roads = RoadBuilder(WORKSPACE)
 containers = AgentContainerManager(WORKSPACE)
+zoning = ZoningManager(os.path.join(os.getcwd(), "city_zoning.json"))
 
 # Mount Frontend
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
@@ -49,10 +51,26 @@ class AgentRegisterRequest(BaseModel):
     name: str
     role: str
 
+class ZoneUpdateRequest(BaseModel):
+    x: int
+    y: int
+    zone_type: str
+
 @app.get("/map")
 async def get_map():
     """Returns the city file topology."""
     return {"files": orchestrator.bridge.get_file_tree()}
+
+@app.get("/zoning")
+async def get_all_zones():
+    """Returns the functional zoning of the grid."""
+    return zoning.get_all_zones()
+
+@app.post("/zoning/update")
+async def update_zone(req: ZoneUpdateRequest):
+    """Updates the functional role of a grid tile."""
+    zoning.set_zone(req.x, req.y, req.zone_type)
+    return {"status": "SUCCESS"}
 
 @app.get("/registry")
 async def get_registry_map(hive: str = "HKEY_CURRENT_USER", subkey: str = "Software"):
