@@ -157,3 +157,78 @@ SimAgentCity is designed to model complex urban ecosystems, comprising agents, c
                                       +---------------+
                                       |  Visualization  |
                                       +---------------+
+
+
+# --- FOUNDRY v10.2 RESTORATION & EXPANSION ---
+# SimAgentCity
+================
+
+## Overview
+SimAgentCity is a comprehensive simulation framework for agent-based modeling of urban ecosystems. This project aims to provide a scalable and flexible platform for researchers and developers to design, test, and analyze various urban scenarios.
+
+### Visual Badges
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Build Status](https://img.shields.io/badge/Build-Status-success.svg)](https://github.com/openrouter/SimAgentCity/actions)
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg)](https://github.com/openrouter/SimAgentCity/releases)
+
+## ASCII Architecture
+```
+├──.git/
+├── README.md
+├── src/
+│   ├── main.py
+│   ├── agent.py
+│   ├── city.py
+│   └── utils.py
+├── tests/
+│   ├── test_agent.py
+│   ├── test_city.py
+│   └── test_utils.py
+├── data/
+│   ├── city_data.csv
+│   ├── agent_data.csv
+│   └── simulation_results.csv
+├── docs/
+│   ├── technical_bible.md
+│   ├── user_manual.md
+│   └── faq.md
+└── requirements.txt
+```
+
+## Deep Dive Descriptions
+SimAgentCity is designed to simulate the interactions between agents (e.g., pedestrians, vehicles, buildings) in an urban environment. The framework consists of three primary components:
+
+1. **Agent**: Represents an entity in the simulation, such as a pedestrian or a vehicle.
+2. **City**: Represents the urban environment, including buildings, roads, and other infrastructure.
+3. **Utils**: Provides utility functions for tasks such as data processing and visualization.
+
+## Axiomatic Breakdowns
+The SimAgentCity framework is based on the following axioms:
+
+1. **UI**: The user interface is responsible for interacting with the simulation, including setting parameters and visualizing results.
+2. **DB**: The database stores and manages the simulation data, including agent and city information.
+3. **State**: The state of the simulation is defined by the current state of the agents and the city.
+4. **API**: The application programming interface provides a set of functions for interacting with the simulation, including setting parameters and retrieving results.
+
+## Multi-Platform Setups
+### Windows Setup
+1. Install Python 3.10+ from python.org
+2. Open PowerShell
+3. Run: pip install -r requirements.txt
+4. Execute: python src/main.py
+
+### Android Setup
+1. Install Termux
+2. pkg install python git
+3. pip install -r requirements.txt
+4. python src/main.py
+
+## Technical Bible
+For a detailed explanation of the SimAgentCity framework, including its architecture, components, and usage, please refer to the [technical bible](docs/technical_bible.md).
+```
+
+[CMD]
+```bash
+git add.
+git commit -m "Standardized SimAgentCity to v10.2 System Bible"
+git push origin main
