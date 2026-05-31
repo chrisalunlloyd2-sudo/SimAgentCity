@@ -1,3 +1,8 @@
+# TIMESTAMP: 2026-05-31T17:52:00.000Z
+# PROJECT_ID: SimAgentCity-v1.3
+# AGENT_ID: Antigravity-CLI-Architect
+# ACTION: INTEGRATE STABILITY AND ATOMIC AUDIT LOGS
+
 import threading
 import queue
 import time
@@ -151,6 +156,72 @@ class AgentCityOrchestrator:
             hyp = self.corrector.analyze_failure(aid, desc, str(e))
             self.active_agents[aid].update({"status": "RECOVERY", "thought": f"FAILED: {hyp}"})
             print(f"[CRITICAL] {aid} entering Darwinian recovery loop.")
+
+    def _trigger_daily_build(self):
+        """
+        Triggers a daily compilation and code sync of active files,
+        evaluates proposed city motions/governance from city_motions.json,
+        and applies dynamic changes.
+        """
+        import random
+        import json
+        print("[ORCHESTRATOR] INITIATING DAILY BUILD & GOVERNANCE RESOLUTION...")
+        print("[ORCHESTRATOR] TIMESTAMP: 2026-05-31T17:52:00.000Z | PROJECT_ID: SimAgentCity-v1.3 | AGENT_ID: Antigravity-CLI-Architect | STATUS: COMPILING")
+        
+        # 1. Compile and sanity-check files in the workspace
+        print(f"[ORCHESTRATOR] Compiling and checking workspace: {self.bridge.root_dir}")
+        import py_compile
+        compiled_count = 0
+        error_count = 0
+        for root, _, files in os.walk(self.bridge.root_dir):
+            for file in files:
+                if file.endswith(".py"):
+                    full_path = os.path.join(root, file)
+                    try:
+                        py_compile.compile(full_path, doraise=True)
+                        compiled_count += 1
+                    except Exception as ce:
+                        print(f"[ORCHESTRATOR] [BUILD WARNING] Workspace file compilation failed for {file}: {ce}")
+                        error_count += 1
+                        
+        print(f"[ORCHESTRATOR] Build Compilation Status: {compiled_count} successful, {error_count} failed.")
+
+        # 2. Read and apply city motions (governance)
+        motions_file = os.path.join("C:\\Users\\viper", "city_motions.json")
+        if not os.path.exists(motions_file):
+            motions_file = "city_motions.json" # fallback
+            
+        if os.path.exists(motions_file):
+            try:
+                with open(motions_file, "r", encoding="utf-8") as f:
+                    motions = json.load(f)
+                
+                print(f"[ORCHESTRATOR] Found {len(motions)} proposed governance motion(s). Processing votes...")
+                
+                for motion_id, details in motions.items():
+                    if details.get("status") == "VOTING":
+                        # Simulate voting
+                        for aid in self.active_agents.keys():
+                            vote = random.randint(50, 150)
+                            details["votes_for"] = details.get("votes_for", 0) + vote
+                        
+                        print(f"[ORCHESTRATOR] Motion '{details.get('description')}' currently has {details.get('votes_for')} votes (Threshold: {details.get('threshold')})")
+                        
+                        if details["votes_for"] >= details.get("threshold", 1000):
+                            details["status"] = "APPROVED"
+                            print(f"[ORCHESTRATOR] [MOTION APPROVED] '{details.get('description')}' has been successfully passed!")
+                            if details.get("type") == "CAPABILITY_UPGRADE":
+                                print(f"[ORCHESTRATOR] [UPGRADE] Unlocked advanced capability for proposer: {details.get('proposer')}")
+                                if details.get("proposer") in self.active_agents:
+                                    self.active_agents[details["proposer"]]["xp"] = self.active_agents[details["proposer"]].get("xp", 0) + 150
+                                    
+                with open(motions_file, "w", encoding="utf-8") as f:
+                    json.dump(motions, f, indent=4)
+                    
+            except Exception as e:
+                print(f"[ORCHESTRATOR] [MOTION ERROR] Failed to resolve motions: {e}")
+        else:
+            print("[ORCHESTRATOR] No city_motions.json file found. Skipping governance pass.")
 
 if __name__ == "__main__":
     import os
