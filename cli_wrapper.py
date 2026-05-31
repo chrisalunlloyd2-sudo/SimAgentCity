@@ -1,3 +1,7 @@
+# TIMESTAMP: 2026-05-23T03:26:00Z
+# PROJECT_ID: SimAgentCity-v1.3
+# AGENT_ID: Antigravity-Architect
+
 import argparse
 import sys
 import os
@@ -5,6 +9,7 @@ import uvicorn
 import requests
 import time
 import threading
+import webbrowser
 
 # PART 3: THE NEURAL ORCHESTRATION
 # Phase 10: The Real-Life Hookup (Steps 876-890)
@@ -17,6 +22,19 @@ from backend.main import app
 def run_server(port):
     uvicorn.run(app, host="0.0.0.0", port=port, log_level="warning")
 
+def auto_launch_browser(port):
+    """Automatically closes existing SimAgentCity windows and launches a fresh one."""
+    time.sleep(2.0)
+    print(f"[GENESIS] Purging previous SimAgentCity browser windows...")
+    try:
+        # Closes windows on Windows that contain "SimAgentCity" in the titlebar
+        os.system('taskkill /F /FI "WINDOWTITLE eq SimAgentCity*" >nul 2>&1')
+    except Exception as err:
+        pass
+    
+    print(f"[GENESIS] Launching fresh UI at http://127.0.0.1:{port}/static/index.html...")
+    webbrowser.open(f"http://127.0.0.1:{port}/static/index.html")
+
 def main():
     parser = argparse.ArgumentParser(description="SimAgentCity - Enterprise Orchestrator (Genesis Edition)")
     parser.add_argument("--start", action="store_true", help="Start the City API Server and UI")
@@ -27,6 +45,9 @@ def main():
     
     if args.start:
         print(f"[GENESIS] Starting SimAgentCity on port {args.port}...")
+        # Start browser auto-launcher thread
+        launcher_thread = threading.Thread(target=auto_launch_browser, args=(args.port,), daemon=True)
+        launcher_thread.start()
         run_server(args.port)
         
     elif args.test:

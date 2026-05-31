@@ -27,6 +27,8 @@
             <button class="win95-btn taskbar-item" onclick="toggleWindow('win-mall')">Agent Mall</button>
             <button class="win95-btn taskbar-item" onclick="toggleWindow('win-bank')">Bank Monitor</button>
             <button class="win95-btn taskbar-item" onclick="toggleWindow('win-vitals')">Hardware Bus</button>
+            <button class="win95-btn taskbar-item" onclick="toggleWindow('win-tasks')">Task Manager</button>
+            <button class="win95-btn taskbar-item" onclick="toggleWindow('win-security')">Security Circle</button>
             <div id="pulse-indicator-container" style="margin-left: auto; display: flex; align-items: center; padding-right: 10px;">
                 <span style="margin-right: 5px;">PULSE:</span>
                 <div id="pulse-indicator"></div>
@@ -102,6 +104,54 @@
                     <p>Weather: <span id="vit-weather">CALM</span></p>
                     <p>Stress: <span id="vit-stress">HEALTHY</span></p>
                 </fieldset>
+            </div>
+        </div>
+
+        <!-- Task Manager Window -->
+        <div class="win95-window" id="win-tasks" style="top: 150px; left: 200px; display: none; width: 350px;">
+            <div class="win95-titlebar">
+                <span>Task Manager - Windows Processes</span>
+                <button class="win95-close" onclick="toggleWindow('win-tasks')">X</button>
+            </div>
+            <div class="win95-content">
+                <fieldset>
+                    <legend>System Processes</legend>
+                    <div id="process-list-view" style="height: 200px; overflow-y: scroll; border: 2px inset #fff; font-family: monospace; font-size: 11px; background: #fff; color: #000; padding: 5px;">
+                        <!-- Processes list populated here -->
+                    </div>
+                </fieldset>
+                <div style="margin-top: 10px; display: flex; justify-content: flex-end; gap: 5px;">
+                    <button class="win95-btn" onclick="demolishSelectedProcess()" style="font-weight: bold; padding: 4px 10px;">DEMOLISH PROCESS</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Circle Window -->
+        <div class="win95-window" id="win-security" style="top: 80px; left: 500px; display: none; width: 350px;">
+            <div class="win95-titlebar">
+                <span>Security Circle - DePIN Monitor</span>
+                <button class="win95-close" onclick="toggleWindow('win-security')">X</button>
+            </div>
+            <div class="win95-content">
+                <fieldset>
+                    <legend>ASIC Proof-of-Work Trust Graph</legend>
+                    <div id="trust-graph-view" style="height: 100px; overflow-y: scroll; border: 2px inset #fff; background: #fff; color: #000; padding: 5px; font-family: monospace; font-size: 11px;">
+                        <!-- Trust multipliers here -->
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>SBI Interpol (Quarantine)</legend>
+                    <p style="margin: 2px 0;">Monitored population: <span id="sec-population" style="font-weight:bold;">0</span></p>
+                    <p style="margin: 2px 0;">Status: <span id="sec-status" style="color:green; font-weight:bold;">ACTIVE</span></p>
+                    <div id="quarantine-list-view" style="height: 60px; overflow-y: scroll; border: 2px inset #fff; background: #ffe6e6; color: #cc0000; padding: 5px; font-family: monospace; font-size: 11px;">
+                        <!-- Quarantined agents list -->
+                    </div>
+                </fieldset>
+                <div style="margin-top: 10px; border-top: 1px dashed #7f7f7f; padding-top: 10px; display: flex; gap: 5px;">
+                    <input type="text" id="mint-agent-id" placeholder="Agent ID" style="width: 80px;">
+                    <input type="text" id="mint-work-proof" placeholder="ASIC Work Proof" style="flex-grow: 1;">
+                    <button class="win95-btn" onclick="mintAgentTrust()" style="font-size: 10px; font-weight: bold;">MINT TRUST</button>
+                </div>
             </div>
         </div>
         

@@ -1,3 +1,7 @@
+# TIMESTAMP: 2026-05-23T03:23:00Z
+# PROJECT_ID: SimAgentCity-v1.3
+# AGENT_ID: Antigravity-Architect
+
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -60,6 +64,16 @@ class ZoneUpdateRequest(BaseModel):
     x: int
     y: int
     zone_type: str
+
+class BulldozeRequest(BaseModel):
+    path: str
+
+class DemolishProcessRequest(BaseModel):
+    pid: int
+
+class TrustMintRequest(BaseModel):
+    agent_id: str
+    physical_work_data: str
 
 @app.get("/map")
 async def get_map():
@@ -131,6 +145,12 @@ async def get_security_status():
         "interpol": sbi.get_interpol_status()
     }
 
+@app.post("/security/mint")
+async def mint_security_trust(req: TrustMintRequest):
+    """Step 901-925: Hardware-backed trust layer minting."""
+    res = trust.mint_trust(req.agent_id, req.physical_work_data)
+    return res
+
 @app.post("/mall/register")
 async def register_agent(req: AgentRegisterRequest):
     """Adds a new agent sim to the population and spawns their physical home."""
@@ -178,17 +198,17 @@ async def get_processes():
     return {"processes": get_process_summary()}
 
 @app.post("/demolish/process")
-async def demolish_process(pid: int):
+async def demolish_process(req: DemolishProcessRequest):
     """Kills an OS process by demolishing its sprite."""
-    success, msg = kill_process(pid)
+    success, msg = kill_process(req.pid)
     if not success:
         raise HTTPException(status_code=400, detail=msg)
     return {"status": "SUCCESS", "message": msg}
 
 @app.post("/bulldoze")
-async def bulldoze_entity(path: str):
+async def bulldoze_entity(req: BulldozeRequest):
     """Step 101-150: Safe deletion protocol."""
-    success, msg = roads.bulldoze(path)
+    success, msg = roads.bulldoze(req.path)
     if not success:
         raise HTTPException(status_code=400, detail=msg)
     return {"status": "SUCCESS", "message": msg}

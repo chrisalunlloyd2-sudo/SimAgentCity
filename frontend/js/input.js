@@ -78,6 +78,7 @@ class CityInput {
                 if (tool === 'tool-query') {
                     const target = this.engine.entities.find(ent => ent.x === isoPos.x && ent.y === isoPos.y);
                     if (target && this.bridge.onInspect) {
+                        if (window.playRetroSound) window.playRetroSound('query');
                         this.bridge.onInspect(target);
                     }
                 } 
@@ -86,6 +87,7 @@ class CityInput {
                     const target = this.engine.entities.find(ent => ent.x === isoPos.x && ent.y === isoPos.y);
                     if (target) {
                         if (confirm(`Bulldoze ${target.name}?`)) {
+                            if (window.playRetroSound) window.playRetroSound('bulldoze');
                             // Backend API call to bulldoze
                             fetch('/bulldoze', {
                                 method: 'POST',
@@ -102,6 +104,7 @@ class CityInput {
                     if (tool === 'tool-zone-proc') zoneType = "PROCESSING";
                     if (tool === 'tool-zone-ind') zoneType = "INDUSTRIAL";
                     
+                    if (window.playRetroSound) window.playRetroSound('drop');
                     // Use bridge to update zone
                     if (window.updateZone) {
                         window.updateZone(isoPos.x, isoPos.y, zoneType);
@@ -117,6 +120,7 @@ class CityInput {
             if (!this.draggedEntity) return;
 
             console.log(`[GOD_HAND] Dropping ${this.draggedEntity.name} at ${isoPos.x}, ${isoPos.y}`);
+            if (window.playRetroSound) window.playRetroSound('drop');
             
             // Trigger Backend Sync (Phase 2 Action Protocol)
             if (this.bridge.syncMovement) {

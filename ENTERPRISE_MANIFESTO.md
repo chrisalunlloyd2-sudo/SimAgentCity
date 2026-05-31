@@ -1,81 +1,82 @@
-# SimAgentCity - Enterprise Systems Manifesto
-**Version:** 1.1.0-Isometric
-**Status:** EVOLVING / SECTOR ACTIVE
-**Author:** The Architect (Systems Orchestrator)
+<!--
+TIMESTAMP: 2026-05-26T12:12:30.987Z
+PROJECT_ID: SimAgentCity-v1.3
+AGENT_ID: Antigravity-Architect
+-->
+
+# 📖 SimAgentCity — Enterprise Wiki & Systems Manifesto
+
+## 1. THE FOUNDATIONAL COGNITIVE METABOLISM (Executive Core)
+> **Topological Axiom:** *The grid is the truth. Every pixel shift on the Canvas translates to a physical OS transaction. We zone systems, we do not simply organize directories.*
+
+SimAgentCity represents a closed-loop Darwinian execution layer. The project is an autonomous software-engineering factory designed to operate continuously under AST selection pressures, local verification loops, and local Web3/DePIN ledger integrity.
 
 ---
 
-## 1. THE SEED AXIOM (Executive Summary)
-> **Core Intent:** *The grid is the truth.* Every pixel shift is a physical OS command. We are building the nervous system of the machine, one district at a time.
-
-This system was evolved using a **Darwinian Genetic Pipeline**, forged in the fires of local AST fitness tests. It is a living, breathing software factory. We don't just "manage files"; we zone them for industrial processing. We don't "kill processes"; we bulldoze their skyscrapers. 
-
----
-
-## 2. CITY TOPOLOGY (Architectural Blueprint)
-The system's DNA is dispersed across specialized urban sectors:
+## 2. DETAILED ARCHITECTURAL TOPOLOGY
+The city coordinates municipal structures and logical backend systems across dedicated directories. The mapping below translates standard OS/application layers into their respective city elements:
 
 ```text
 SimAgentCity/
- ├── .git/                <-- The Ledger of History
- ├── backend/             <-- The Underground Power Grid (Python/FastAPI)
- │   ├── main.py          <-- Central Command Hook
- │   ├── core/            <-- The Foundation Atoms
- │   └── api/             <-- Public Transit Handshakes
- ├── frontend/            <-- The Isometric Skyline (Canvas/1995 JS)
- │   ├── index.html       <-- City Gates
- │   ├── css/             <-- Retro Atmospheric Filtering
- │   └── js/              <-- The Engine of Time (1.2s Pulse)
- ├── tools/               <-- Municipal Services (Demolition/Recruitment)
- ├── city_workspace/      <-- The Industrial Sandbox (Raw Resources)
- ├── requirements.txt     <-- The Resource Manifest
- ├── PULSE_HEARTBEAT.txt  <-- The 1.2s Handshake Protocol
- └── ENTERPRISE_MANIFESTO.md <-- The Sacred Laws
+ ├── .git/                 <-- The Permanent Ledger of History (Time-chain)
+ ├── backend/              <-- The Core Metabolism (FastAPI System Command)
+ │    ├── main.py          <-- Central Command & API Gateway
+ │    └── core/            <-- Foundations & Operational Bridges
+ │         ├── orchestrator.py  <-- The Brain: concurrency & task queues
+ │         ├── os_bridge.py     <-- Physical File System manipulation
+ │         ├── registry_bridge.py <-- Isolated HKCU Windows Registry Mapper
+ │         ├── trust_layer.py   <-- ASIC PoW trust evaluation math
+ │         └── telemetry_monitor.py <-- Bare-metal Windows API telemetry loops
+ ├── frontend/             <-- The Graphical Overlay (Canvas Viewport)
+ │    ├── index.html       <-- Main Viewport Window
+ │    ├── css/style.css    <-- Win95 Retro Styling and Layout
+ │    └── js/
+ │         ├── engine.js   <-- Isometric 2:1 math & rendering pipeline
+ │         ├── bridge.js   <-- 1.2s Real-time polling & transaction sync
+ │         └── input.js    <-- Bounding-box collision & spatial drag-and-drop
+ └── city_workspace/       <-- The Raw Materials Sector (File Sandbox)
 ```
 
 ---
 
-## 3. OPERATIONAL RUNBOOK (City Maintenance)
-### 3.1 One-Line Genesis
-To initialize the sector and verify city health:
-`git clone https://github.com/chrisalunlloyd2-sudo/SimAgentCity.git && cd SimAgentCity && pip install -r requirements.txt && python backend/main.py`
+## 3. MUNICIPAL CODE (The Action Protocols)
+Operations inside the workspace map to deep bare-metal procedures.
 
-### 3.2 Environmental Constraints
-**The Atmosphere:** Python 3.11+
-**The Power Plants:** Local Ollama swarms (`h2o-danube3:4b`).
-**The Ground:** Windows OS (Required for Registry Plaza depth).
+### 🚜 3.1 The Bulldozer (Safe Deletion Protocol)
+- **Grid Action:** Activating the Bulldozer tool and clicking an entity on the grid.
+- **Backend Mechanics:** Triggers a safe, non-destructive deletion protocol using local trash/recycle hooks.
+- **Lore Context:** Structures are demolished into raw pixels, returning memory space back to the municipal reserve.
 
-### 3.3 The Pulse Handshake
-The city synchronizes with the OS every **1.2 seconds**. A green pulse indicator confirms that the Architect's hand is steady and the bridge is active.
+### 🛣️ 3.2 The Road Builder (Symlink Infrastructure)
+- **Grid Action:** Drawing connection paths between directories.
+- **Backend Mechanics:** Creates high-efficiency OS-level symbolic links (`mklink` on Windows) to bypass slow standard copy/paste actions.
+- **Lore Context:** Paving highways allows processing streams to flow with zero physical file transfer overhead.
 
----
-
-## 4. THE ACTION PROTOCOLS & THE FACTORY FLOOR (Municipal Code)
-The grid operates as a literal, functional assembly line for software generation. The public data pipe acts as the conveyor belt, topological zones are manufacturing stations (compiling, testing, securing), and agents are the autonomous workers.
-- **THE BULLDOZER:** Moving a file to `city_trash` initiates a safe, reversible deletion protocol.
-- **THE ROAD BUILDER:** FTP links are paved as bulk infrastructure (Symlinks).
-- **THE TRANSIT SYSTEM:** TCP is mapped to 'Walking' (Reliable); UDP is mapped to 'Bicycles' (Fast/Nimble).
+### 💻 3.3 Task Manager (Demolition Process)
+- **Grid Action:** Selecting a process skyscraper and executing "Demolish Process".
+- **Backend Mechanics:** Resolves the entity back to its system Process ID (PID) and triggers a clean `taskkill` via `kernel32` process demolition hooks.
+- **Lore Context:** Rogue processes are physically excised from the motherboard skyline.
 
 ---
 
-## 5. THE BANK MONITOR & IMMUTABLE TRUST
-By having an independent Bank Monitor overseeing the environment, we decouple transaction logic from the agents.
-- **Zero Spoofing:** An agent can negotiate logic, but cannot unilaterally force a physical transaction. The bank acts as the immutable ledger.
-- **OpenClaw-Style Personalization:** Agents possess dynamic risk profiles and autonomous resource management. The Bank Monitor ensures their actions respect overarching security constraints.
-- **Automated Arbitration:** Ecosystem is self-governing via digital contracts (Escrow Execution, Performance Enforcement, Immutable Context).
+## 4. THE CRYPTO LEDGER & LOCAL DePIN
+Security in the city limits is enforced by an immutable transactional architecture:
+
+### 4.1 Local DePIN Proof-of-Work
+1. **ASIC Integration:** Utilizes legacy hardware hash power (SHA-256 ASIC rigs) to generate verifiable computational work proofs.
+2. **Trust Multipliers:** Agents submit cryptographic proofs of mathematical work to mint trust score multipliers.
+3. **Behavioral Quarantine (SBI / Interpol):** The Systemic Behavioral Interpolation monitor models typical transaction distributions. Anomalous actions outside the calculated variance result in immediate quarantine of the agent's virtual sandbox.
+
+### 4.2 Zero-Spoofing Escrow
+- No agent can unilaterally alter the bank's files.
+- The independent **Bank Monitor** acts as the decentralized ledger's arbitrator, releasing resources only when specific AST compilation benchmarks are cryptographically validated.
 
 ---
 
-## 6. LOCAL WEB3 & PRIVATE DePIN
-SimAgentCity anchors its trust layer via a Private Decentralized Physical Infrastructure Network (DePIN).
-- **Hardware-Backed SHA-256 Trust Layer:** Legacy ASIC miners serve as physical Proof-of-Work anchors. A rogue process cannot spoof its way into high-security domains because it cannot mathematically fake the physical hash rate.
-- **Trapping Web3 Locally:** The ledger, contracts, and token economy remain entirely sandboxed. 
-- **SBI (Systemic Behavioral Interpolation):** A global monitor tracking standard transaction volumes. Deviations from the interpolated norm trigger autonomous quarantine protocols.
+## 5. DARWINIAN SELECTION CONSTRAINTS
+- **Cycle Time:** 1.2-second pulse frequency on the JS client.
+- **Fitness Evaluation:** Code compiled and run under deep AST checkers. Zero compilation warnings = High XP agents.
+- **Mutation Vector:** Autonomous prompt genetics executed concurrently based on code compilation failures.
 
 ---
-
-## 7. DARWINIAN LOGS
-**Mutation Rate:** 1.2s per Page.
-**Selection Pressure:** Zero-Yap Adherence, AST Purity, and Physical Path Persistence.
-
-**Final Certification:** [CITY_ALIVE_AND_SYNCED]
+*MISSION STATUS: SECTOR 3 ALIVE & ACTIVE*
