@@ -1,0 +1,33 @@
+{
+    "__viper_signature__": {
+        "TIMESTAMP": "2026-06-01T01:00:00.000Z",
+        "PROJECT_ID": "SimAgentCity-v1.3",
+        "AGENT_ID": "Antigravity-CLI-Architect"
+    },
+    "model_parameters": {
+        "batch": 16,
+        "dropout": 0.05,
+        "temp": 0.7,
+        "rag_k": 4,
+        "heads": 8,
+        "rope": 10000.0,
+        "mem": 8.0
+    },
+    "inference_profiles": {
+        "qwen2.5:0.5b": {
+            "temp": 0.2,
+            "rag_k": 2,
+            "batch": 8
+        },
+        "h2o-danube3:4b": {
+            "temp": 0.6,
+            "rag_k": 4,
+            "batch": 16
+        },
+        "mistral": {
+            "temp": 0.7,
+            "rag_k": 5,
+            "batch": 32
+        }
+    }
+}

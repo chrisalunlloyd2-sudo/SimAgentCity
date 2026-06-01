@@ -1,0 +1,18 @@
+[
+    {
+        "id": "agent_e37517756667",
+        "name": "Genesis_Prime",
+        "role": "Processor",
+        "model": "h2o-danube3:4b",
+        "status": "IDLE",
+        "wallet": "0xbb27ca25eca4f4a81204cb606577514a20f81dd1",
+        "traits": {
+            "risk_profile": "Balanced",
+            "budget_limit": 1000,
+            "trust_score": 100,
+            "xp": 0,
+            "stamina": 100,
+            "logic_level": 1
+        }
+    }
+]

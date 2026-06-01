@@ -1,0 +1,17 @@
+[
+    {
+        "index": 0,
+        "previous_hash": "0",
+        "timestamp": 1779796596.7911818,
+        "transactions": [
+            {
+                "system": "GENESIS_MINT",
+                "amount": 1000000,
+                "currency": "SYS_COIN"
+            }
+        ],
+        "contract_code": "",
+        "nonce": 6717,
+        "hash": "000a970303fb03726cd886f480a2ca58c43a2bd681f0c71712aede5bcc1c1b0b"
+    }
+]
