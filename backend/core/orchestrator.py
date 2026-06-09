@@ -8,6 +8,8 @@ import queue
 import time
 import os
 import sys
+import asyncio
+from .message_bus import bus
 
 # Handshake for local sandbox testing
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -113,13 +115,17 @@ class AgentCityOrchestrator:
         if aid not in self.active_agents:
             self.active_agents[aid] = {"status": "IDLE", "thought": "Awaiting orders.", "xp": 0, "stamina": 100}
 
+        # Broadcast start
+        asyncio.run_coroutine_threadsafe(self._broadcast_to_ui("System", f"Starting task: {desc} for {aid}"), asyncio.get_event_loop())
+
         # Check stamina before starting
         if self.active_agents[aid].get("stamina", 100) < 20:
             self.active_agents[aid].update({"status": "RESTING", "thought": "Too tired. Need to recharge."})
-            print(f"[SYSTEM] {aid} is exhausted. Task deferred.")
+            asyncio.run_coroutine_threadsafe(self._broadcast_to_ui(aid, "Resting..."), asyncio.get_event_loop())
             return
 
         self.active_agents[aid].update({"status": "PROCESSING", "thought": "Analyzing terrain...", "stamina": self.active_agents[aid]["stamina"] - 20})
+        asyncio.run_coroutine_threadsafe(self._broadcast_to_ui(aid, "Analyzing terrain..."), asyncio.get_event_loop())
         
         # Pay for processing
         self._clear_transaction(aid, "PROCESSING_CYCLE", cost=5)
@@ -130,6 +136,7 @@ class AgentCityOrchestrator:
                 content = f.read()
             
             self.active_agents[aid]["thought"] = self.hive.generate_chat_bubble(aid, "Worker", "Data Extraction")
+            asyncio.run_coroutine_threadsafe(self._broadcast_to_ui(aid, self.active_agents[aid]["thought"]), asyncio.get_event_loop())
 
             res = self.hive.route_task(f"Process this file: {desc}\n\nContent:\n{content}", complexity="SMART")
             result = res.get("response", "")
@@ -150,11 +157,14 @@ class AgentCityOrchestrator:
             # Reward agent for successful processing
             self.ledger.add_transaction(sender="System", receiver=aid, amount=50, currency="PYTHON_COIN", contract="REWARD_PROCESSING")
             
-            self.active_agents[aid].update({"status": "IDLE", "thought": "Mission complete. Gained 10 XP & 50 Coins."})
+            final_msg = "Mission complete. Gained 10 XP & 50 Coins."
+            self.active_agents[aid].update({"status": "IDLE", "thought": final_msg})
+            asyncio.run_coroutine_threadsafe(self._broadcast_to_ui(aid, final_msg), asyncio.get_event_loop())
 
         except Exception as e:
             hyp = self.corrector.analyze_failure(aid, desc, str(e))
             self.active_agents[aid].update({"status": "RECOVERY", "thought": f"FAILED: {hyp}"})
+            asyncio.run_coroutine_threadsafe(self._broadcast_to_ui(aid, f"Failed: {hyp}"), asyncio.get_event_loop())
             print(f"[CRITICAL] {aid} entering Darwinian recovery loop.")
 
     def _trigger_daily_build(self):

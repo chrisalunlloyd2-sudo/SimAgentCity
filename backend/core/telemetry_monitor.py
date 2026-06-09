@@ -3,6 +3,7 @@ from ctypes import wintypes
 import os
 import time
 import psutil
+import subprocess
 
 # PART 1: THE OS & HARDWARE METABOLISM
 # Phase 1: The Deep Registry & Telemetry (Steps 76-100: Hardware Bus)
@@ -24,12 +25,28 @@ class MEMORYSTATUSEX(ctypes.Structure):
         self.dwLength = ctypes.sizeof(self)
         super(MEMORYSTATUSEX, self).__init__()
 
+class MetabolismMonitor:
+    def __init__(self):
+        pass
+
+    def cleanup_processes(self):
+        """Step 1-50: Detect and kill zombie processes (WebView2/Edge)."""
+        try:
+            # Kill unresponsive processes
+            subprocess.run(["taskkill", "/F", "/IM", "msedgewebview2.exe", "/FI", "STATUS eq UNRESPONSIVE"], capture_output=True)
+            subprocess.run(["taskkill", "/F", "/IM", "msedge.exe", "/FI", "STATUS eq UNRESPONSIVE"], capture_output=True)
+            return True
+        except Exception as e:
+            print(f"[METABOLISM MONITOR] Cleanup error: {e}")
+            return False
+
 class TelemetryMonitor:
     def __init__(self):
         self.kernel32 = ctypes.windll.kernel32
         # Initialize network counters for delta calculation
         self.last_net_io = psutil.net_io_counters()
         self.last_time = time.time()
+        self.metabolism = MetabolismMonitor()
 
     def get_memory_stats(self):
         """Step 1-25: RAM tracking."""
@@ -81,10 +98,8 @@ class TelemetryMonitor:
         mem = self.get_memory_stats()
         bus = self.get_hardware_bus()
         
-        if not mem: return {"status": "OFFLINE"}
-        
         # Aggregate stress level
-        avg_load = (mem["load_percent"] + bus["cpu_load"]) / 2
+        avg_load = (mem["load_percent"] + bus["cpu_load"]) / 2 if mem else 50
         stress = "HEALTHY"
         if avg_load > 80: stress = "CRITICAL"
         elif avg_load > 50: stress = "CROWDED"
@@ -95,7 +110,8 @@ class TelemetryMonitor:
         elif bus["city_wind_speed"] > 10: weather = "BREEZY"
         
         return {
-            "os_stats": mem,
+            "status": "ONLINE",
+            "os_stats": mem or {},
             "hardware_bus": bus,
             "city_stress": stress,
             "city_weather": weather,

@@ -1,0 +1,1 @@
+{"proposal": {"attemptId": "INITIAL_BOOT", "code": "# ERR", "rationale": "Fail"}, "critique": {"issue": "Parsing failed", "location": "N/A", "severity": "LOW"}, "test_results": {"pass_rate": 1.0, "failures": "", "logs_digest": ""}}

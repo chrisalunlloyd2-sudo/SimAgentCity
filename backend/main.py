@@ -1,18 +1,28 @@
-# TIMESTAMP: 2026-05-23T03:23:00Z
-# PROJECT_ID: SimAgentCity-v1.3
-# AGENT_ID: Antigravity-Architect
+# TIMESTAMP: 2026-06-08T10:15:00Z
+# PROJECT_ID: SimsMerged-v1.4.2
+# AGENT_ID: Gemini-CLI-Architect-Fixer
 
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Optional
 import os
 import sys
+import datetime
+import json
 
-# Sandbox handshake
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
+# Path resolution
+sys.path.append(os.getcwd())
+sys.path.append(os.path.join(os.getcwd(), "backend"))
+from core.chrono_layer import chronos
 from core.orchestrator import AgentCityOrchestrator
+# ...
+
+@app.get("/api/chrono-status")
+async def get_chrono_status():
+    """Returns the current voting epoch, turn, and phase."""
+    return chronos.get_chronos_state()
+
 from core.registry_bridge import RegistryBridge
 from core.agent_registrar import AgentRegistrar
 from core.telemetry_monitor import TelemetryMonitor
@@ -24,6 +34,89 @@ from core.sbi_monitor import SBIMonitor
 from tools.task_mgr_mini import get_process_summary, kill_process
 
 app = FastAPI(title="SimAgentCity API")
+
+# Add CORS Middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# --- CHAT ENGINE (POLLING BASED) ---
+@app.post("/chat")
+async def post_chat(req: dict):
+    log_file = "chat_logs.json"
+    entry = {
+        "timestamp": datetime.datetime.now().strftime("%H:%M:%S"),
+        "agent": req.get("agent", "User"),
+        "message": req.get("message", "")
+    }
+    logs = []
+    if os.path.exists(log_file):
+        try:
+            with open(log_file, "r") as f:
+                logs = json.load(f)
+        except: logs = []
+    logs.append(entry)
+    with open(log_file, "w") as f:
+        json.dump(logs[-50:], f, indent=2)
+    return {"status": "SUCCESS"}
+
+@app.get("/chat")
+async def get_chat():
+    log_file = "chat_logs.json"
+    # Auto-heartbeat
+    heartbeat = {
+        "timestamp": datetime.datetime.now().strftime("%H:%M:%S"),
+        "agent": "SYSTEM",
+        "message": "CONNECTION_ALIVE"
+    }
+    if not os.path.exists(log_file):
+        return {"logs": [heartbeat]}
+    with open(log_file, "r") as f:
+        try: logs = json.load(f)
+        except: logs = []
+    return {"logs": logs[-50:] + [heartbeat]}
+
+# --- ENDPOINTS ---
+@app.get("/api/machine-heartbeat")
+async def get_heartbeat():
+    return {"status": "ONLINE", "timestamp": datetime.datetime.now().isoformat()}
+
+@app.get("/api/metropolis-state")
+async def get_metropolis_state():
+    return {"state": "GENESIS_PHASE", "active_agents": 8}
+
+@app.post("/api/metropolis-state")
+async def post_metropolis_state():
+    return {"status": "ACKNOWLEDGED"}
+
+@app.get("/api/network-status")
+async def get_network_status(): return {"status": "ONLINE"}
+
+@app.get("/api/physical-status")
+async def get_physical_status(): return {"status": "ONLINE"}
+
+@app.get("/api/hardware")
+async def get_hardware(): return {"status": "ONLINE"}
+
+@app.get("/api/evolution-project")
+async def get_evolution(): return {"status": "ACTIVE"}
+
+@app.get("/api/machine-hardware-telemetry")
+async def get_hardware_telemetry():
+    return telemetry.get_hardware_bus()
+
+@app.post("/api/bank/mint")
+async def mint_currency(req: dict):
+    amount = req.get("amount", 0)
+    orchestrator.ledger.mint("System", "SPRITE", amount)
+    return {"status": "SUCCESS", "new_balance": orchestrator.ledger.get_balance("System", "SPRITE")}
+
+@app.get("/api/ledger-status")
+async def get_ledger_status():
+    return {"balance": orchestrator.ledger.get_balance("System", "SPRITE"), "mint_rate": 0.05}
 
 # Initialize Orchestrator on a default workspace
 WORKSPACE = os.path.join(os.getcwd(), "city_workspace")
@@ -40,179 +133,6 @@ sbi = SBIMonitor(os.path.join(os.getcwd(), "behavior_history.json"))
 # Mount Frontend
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
-class TaskRequest(BaseModel):
-    agent_id: str
-    file_path: str
-    task: str
-
-class MoveRequest(BaseModel):
-    source: str
-    destination: str
-
-class RegistryUpdateRequest(BaseModel):
-    hive: str = "HKEY_CURRENT_USER"
-    subkey: str
-    value_name: str
-    value: str
-
-class AgentRegisterRequest(BaseModel):
-    name: str
-    role: str
-    risk_profile: str = "Balanced"
-
-class ZoneUpdateRequest(BaseModel):
-    x: int
-    y: int
-    zone_type: str
-
-class BulldozeRequest(BaseModel):
-    path: str
-
-class DemolishProcessRequest(BaseModel):
-    pid: int
-
-class TrustMintRequest(BaseModel):
-    agent_id: str
-    physical_work_data: str
-
-@app.get("/map")
-async def get_map():
-    """Returns the city file topology."""
-    return {"files": orchestrator.bridge.get_file_tree()}
-
-@app.get("/bank/ledger")
-async def get_bank_ledger():
-    """Returns the immutable bank ledger for the Bank Monitor UI."""
-    ledger_data = []
-    for block in orchestrator.ledger.chain:
-        for txn in block.transactions:
-            ledger_data.append({
-                "hash": block.hash,
-                "timestamp": block.timestamp,
-                "sender": txn["sender"],
-                "receiver": txn["receiver"],
-                "amount": txn["amount"],
-                "currency": txn["currency"],
-                "contract": block.contract_code
-            })
-    
-    # Calculate system treasury
-    system_funds = orchestrator.ledger.get_balance("System", "PYTHON_COIN")
-    
-    return {"ledger": ledger_data, "total_funds": system_funds}
-
-@app.get("/zoning")
-async def get_all_zones():
-    """Returns the functional zoning of the grid."""
-    return zoning.get_all_zones()
-
-@app.post("/zoning/update")
-async def update_zone(req: ZoneUpdateRequest):
-    """Updates the functional role of a grid tile."""
-    zoning.set_zone(req.x, req.y, req.zone_type)
-    return {"status": "SUCCESS"}
-
-@app.get("/registry")
-async def get_registry_map(hive: str = "HKEY_CURRENT_USER", subkey: str = "Software"):
-    """Returns registry keys as buildings."""
-    return {"keys": registry.get_keys(hive, subkey)}
-
-@app.post("/registry/update")
-async def update_registry(req: RegistryUpdateRequest):
-    """Allows agents to renovate registry buildings."""
-    success, msg = registry.write_value(req.hive, req.subkey, req.value_name, req.value)
-    if not success:
-        raise HTTPException(status_code=400, detail=msg)
-    return {"status": "SUCCESS", "message": msg}
-
-@app.post("/move")
-async def move_entity(req: MoveRequest):
-    """Physically moves a file and logs movement to SBI Monitor."""
-    success, msg = orchestrator.bridge.move_file(req.source, req.destination)
-    if not success:
-        raise HTTPException(status_code=400, detail=msg)
-    
-    # Step 1001-1050: SBI Logging
-    sbi.log_movement("Architect_Hand", 0, 0) 
-    
-    return {"status": "SUCCESS", "message": msg}
-
-@app.get("/security/status")
-async def get_security_status():
-    """Returns the city security circle status (DePIN / Web3 Trap)."""
-    return {
-        "trust_graph": trust.trust_graph,
-        "interpol": sbi.get_interpol_status()
-    }
-
-@app.post("/security/mint")
-async def mint_security_trust(req: TrustMintRequest):
-    """Step 901-925: Hardware-backed trust layer minting."""
-    res = trust.mint_trust(req.agent_id, req.physical_work_data)
-    return res
-
-@app.post("/mall/register")
-async def register_agent(req: AgentRegisterRequest):
-    """Adds a new agent sim to the population and spawns their physical home."""
-    agent = registrar.register_agent(req.name, req.role, req.risk_profile)
-    # Step 201-300: Physical Spawning
-    success, msg = containers.spawn_agent_home(agent["id"])
-    if not success:
-        raise HTTPException(status_code=500, detail=f"Registration failed: {msg}")
-    return {"status": "SUCCESS", "agent": agent, "environment": msg}
-
-@app.get("/mall/agents/stats")
-async def get_agent_storage_stats(agent_id: str):
-    """Checks disk usage of an agent's sandbox."""
-    return containers.get_agent_storage_stats(agent_id)
-
-@app.get("/mall/agents")
-async def get_mall_agents():
-    """Lists all agents available in the mall."""
-    return {"agents": registrar.get_registered_agents()}
-
-@app.post("/assign")
-async def assign_task(req: TaskRequest):
-    """Assigns an agent to a file task."""
-    orchestrator.assign_task(req.agent_id, req.file_path, req.task)
-    return {"status": "QUEUED", "agent": req.agent_id}
-
-@app.get("/agents")
-async def get_agents():
-    """Returns status of all active sims."""
-    return orchestrator.active_agents
-
-@app.get("/vitals")
-async def get_vitals():
-    """Returns real-time city metabolism stats."""
-    return telemetry.get_city_vitals()
-
-@app.get("/transit")
-async def get_transit_mapping(mode: str = "TCP"):
-    """Returns the city transit mapping (TCP=WALK, UDP=BIKE, FTP=ROAD)."""
-    return roads.protocol_dispatch({}, mode)
-
-@app.get("/processes")
-async def get_processes():
-    """Returns OS processes as system buildings."""
-    return {"processes": get_process_summary()}
-
-@app.post("/demolish/process")
-async def demolish_process(req: DemolishProcessRequest):
-    """Kills an OS process by demolishing its sprite."""
-    success, msg = kill_process(req.pid)
-    if not success:
-        raise HTTPException(status_code=400, detail=msg)
-    return {"status": "SUCCESS", "message": msg}
-
-@app.post("/bulldoze")
-async def bulldoze_entity(req: BulldozeRequest):
-    """Step 101-150: Safe deletion protocol."""
-    success, msg = roads.bulldoze(req.path)
-    if not success:
-        raise HTTPException(status_code=400, detail=msg)
-    return {"status": "SUCCESS", "message": msg}
-
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8000)

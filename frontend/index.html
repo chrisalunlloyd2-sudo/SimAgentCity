@@ -70,6 +70,17 @@
             </div>
         </div>
 
+        <!-- Chat Window -->
+        <div class="win95-window" id="win-chat" style="top: 200px; left: 600px; display: none; width: 300px;">
+            <div class="win95-titlebar">
+                <span>MSN Chat - Agent Comm</span>
+                <button class="win95-close" onclick="toggleWindow('win-chat')">X</button>
+            </div>
+            <div class="win95-content" style="height: 200px; overflow-y: scroll; background: #fff;" id="chat-view">
+                <!-- Chat populated here -->
+            </div>
+        </div>
+
         <!-- Bank Monitor Window -->
         <div class="win95-window" id="win-bank" style="top: 100px; left: 400px; display: none;">
             <div class="win95-titlebar">
