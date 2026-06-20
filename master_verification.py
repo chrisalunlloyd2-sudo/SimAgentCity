@@ -27,7 +27,7 @@ class MasterVerifier:
             except Exception as e:
                 results[name] = False
                 print(f"[AUDIT] {name}: FAIL ({e})")
-        
+
         return results
 
 if __name__ == "__main__":

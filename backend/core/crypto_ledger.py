@@ -45,7 +45,7 @@ class CryptoLedger:
                         block.nonce = b["nonce"]
                         block.hash = b["hash"]
                         self.chain.append(block)
-            except:
+            except Exception:
                 self.create_genesis_block()
         else:
             self.create_genesis_block()
@@ -82,7 +82,7 @@ class CryptoLedger:
             "amount": amount,
             "currency": currency
         }
-        # In a real environment, pending txns sit in a mempool. 
+        # In a real environment, pending txns sit in a mempool.
         # Here we mint a block per transaction for immediate local execution.
         new_block = Block(
             index=len(self.chain),
@@ -112,15 +112,15 @@ if __name__ == "__main__":
     print("Testing True Cryptographic Ledger (ASIC Proof of Work)...")
     ledger = CryptoLedger("./test_blockchain.json", difficulty=4) # Higher diff for test
     print(f"Genesis Block Hash: {ledger.get_latest_block().hash}")
-    
+
     print("Mining transaction block...")
     start = time.time()
     tx_hash = ledger.add_transaction("System", "Agent_01", 500, "PYTHON_COIN")
     elapsed = time.time() - start
-    
+
     print(f"Block Mined in {elapsed:.2f}s. Hash: {tx_hash}")
     print(f"Agent_01 Balance: {ledger.get_balance('Agent_01', 'PYTHON_COIN')}")
-    
+
     if os.path.exists("./test_blockchain.json"):
         os.remove("./test_blockchain.json")
         print("Test Passed. Winner Selected.")

@@ -95,7 +95,7 @@ class ActorObserverController:
 
     def run(self):
         print("[MASTER CONTROLLER] Active.")
-        
+
         while True:
             # Broadcast heartbeat
             self._log_to_chat("System", "HEARTBEAT_ACTIVE: Processing...")
@@ -103,10 +103,10 @@ class ActorObserverController:
             # 1. Harmonic throttle
             throttle_factor = self.governor.calculate_throttle()
             time.sleep(60 * throttle_factor)
-            
+
             # 2. Symphony Sync
             self.symphony.run_symphony()
-            
+
             # 3. Autonomous Minting (Phase 14)
             try:
                 telemetry = requests.get("http://localhost:8000/api/machine-hardware-telemetry").json()
@@ -115,34 +115,34 @@ class ActorObserverController:
                 self._log_to_chat("Treasury", f"Minted {mint_amount:.2f} SPRITE based on load.")
             except Exception as e:
                 self._log_to_chat("System", f"Minting error: {e}")
-            
+
             # 4. Master Task
             if self.task_queue:
                 task = self.task_queue.pop(0)
                 self._log_to_chat("System", f"Processing: {task['goal']}")
-                
+
                 # Propose
                 prompt = f"Goal: {task['goal']}. Context: {task['context']}. Output JSON: {{'attemptId': '{task['taskId']}', 'code': '...', 'rationale': '...'}}"
                 proposal_raw = self.router.route_task(prompt, complexity="SMART")
                 try:
                     proposal = json.loads(proposal_raw['response'])
                 except: proposal = {"attemptId": task['taskId'], "code": "# ERR", "rationale": "Fail"}
-                
+
                 # Critique & Test
                 critique = self.critic.analyze(proposal)
                 test_results = self.tester.run_proposal(proposal)
-                fitness = self.governor.calculate_throttle() 
-                
+                fitness = self.governor.calculate_throttle()
+
                 # Fitness check (Audit)
                 if fitness < 0.5:
                     self._log_to_chat("System", f"Task {task['taskId']} rejected: Low predictive fitness ({fitness:.2f}).")
                     continue
-                
+
                 # Persist
                 self._log_to_chat("Proposer", proposal['rationale'][:50])
                 self._log_to_chat("Critic", critique['severity'])
                 self._log_to_chat("Tester", str(test_results['pass_rate']))
-                
+
                 # archive
                 with open(os.path.join(self.briefcase_dir, f"{task['taskId']}.json"), "w") as f:
                     json.dump({"proposal": proposal, "critique": critique, "test_results": test_results, "fitness": fitness}, f)

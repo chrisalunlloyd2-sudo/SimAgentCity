@@ -16,13 +16,13 @@ class AgentContainerManager:
         """Steps 201-250: Creates an isolated physical environment for a Sim."""
         agent_dir = os.path.join(self.agents_root, agent_id)
         subdirs = ["home", "inventory", "logs", "temp"]
-        
+
         try:
             if not os.path.exists(agent_dir):
                 os.makedirs(agent_dir)
                 for sd in subdirs:
                     os.makedirs(os.path.join(agent_dir, sd))
-            
+
             return True, f"Agent {agent_id} environment spawned at {agent_dir}"
         except Exception as e:
             return False, str(e)
@@ -31,13 +31,13 @@ class AgentContainerManager:
         """Steps 251-300: Maps a physical folder into the agent's inventory."""
         agent_inventory = os.path.join(self.agents_root, agent_id, "inventory")
         target_link = os.path.join(agent_inventory, target_alias)
-        
+
         try:
             # Create a symbolic link (volume mount)
             # Note: requires developer mode or admin on Windows
             if os.path.exists(target_link):
                 return True, "Volume already mounted."
-                
+
             os.symlink(source_path, target_link, target_is_directory=os.path.isdir(source_path))
             return True, f"Volume {source_path} mounted to agent {agent_id}/{target_alias}"
         except Exception as e:
@@ -59,17 +59,17 @@ if __name__ == "__main__":
     # Step 8: Natural Selection Test
     print("Testing Agent Sandboxing...")
     manager = AgentContainerManager("./test_city_root")
-    
+
     success, msg = manager.spawn_agent_home("test_sim_1")
     print(f"Spawn Test: {success}, {msg}")
-    
+
     if success:
         # Step 251-300 check
         stats = manager.get_agent_storage_stats("test_sim_1")
         print(f"Sandbox Stats: {stats}")
-        
+
         print("Test Passed. Winner Selected.")
-    
+
     # Cleanup
     if os.path.exists("./test_city_root"):
         shutil.rmtree("./test_city_root")

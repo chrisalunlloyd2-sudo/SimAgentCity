@@ -14,7 +14,7 @@ class LeanController:
     def __init__(self):
         self.interval = 300 # 5 minutes between task checks
         self.briefcase_dir = "briefcase"
-        
+
     def throttle(self):
         """Force process to be polite to the OS."""
         proc = psutil.Process(os.getpid())
@@ -27,10 +27,10 @@ class LeanController:
             # 1. Perform one single task
             print("[LEAN CONTROLLER] Analyzing task...")
             # (Replace with logic to poll tasks from a unified queue)
-            
+
             # 2. Sync databases (Symphony)
             # (Unified logic here)
-            
+
             # 3. Throttle
             self.throttle()
 

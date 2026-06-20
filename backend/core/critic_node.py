@@ -14,10 +14,10 @@ class CriticNode:
         """Analyzes code proposal for flaws."""
         code = proposal.get("code", "")
         prompt = f"Critique this code for logic errors, security risks, and style. Output ONLY valid JSON: {{'issue': '...', 'location': '...', 'severity': 'HIGH|MEDIUM|LOW'}}. Code: {code}"
-        
+
         critique_raw = self.router.route_task(prompt, complexity="SMART")
-        
+
         try:
             return json.loads(critique_raw['response'])
-        except:
+        except Exception:
             return {"issue": "Parsing failed", "location": "N/A", "severity": "LOW"}

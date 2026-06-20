@@ -12,7 +12,7 @@ class ChronoLayer:
     def __init__(self):
         self.start_time = time.time()
         self.epoch_length = 60 # Epoch duration in seconds
-        
+
     def get_chronos_state(self):
         elapsed = time.time() - self.start_time
         epoch = int(elapsed / self.epoch_length)

@@ -46,7 +46,7 @@ if __name__ == "__main__":
     # Step 8: Natural Selection Test
     test_dir = os.path.join(os.getcwd(), "test_watch_zone")
     if not os.path.exists(test_dir): os.makedirs(test_dir)
-    
+
     events_detected = []
     def test_callback(type, path):
         print(f"Event: {type} - {os.path.basename(path)}")
@@ -54,19 +54,19 @@ if __name__ == "__main__":
 
     watcher = CityFileWatcher(test_dir, test_callback)
     watcher.start()
-    
+
     time.sleep(1)
     print("Triggering OS Event: Creating file...")
     test_file = os.path.join(test_dir, "event_test.txt")
     with open(test_file, "w") as f: f.write("trigger")
-    
+
     time.sleep(2) # Wait for event propagation
     watcher.stop()
-    
+
     # Cleanup
     if os.path.exists(test_file): os.remove(test_file)
     if os.path.exists(test_dir): os.rmdir(test_dir)
-    
+
     if "CREATED" in events_detected:
         print("Test Passed. Winner Selected.")
     else:

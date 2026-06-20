@@ -12,7 +12,7 @@ class FuzzEngine:
     def mutate(self, text):
         mutation_types = ["char_flip", "token_drop", "chaos_insert"]
         m_type = random.choice(mutation_types)
-        
+
         if m_type == "char_flip":
             chars = list(text)
             idx = random.randint(0, len(chars)-1)
@@ -27,11 +27,11 @@ class ShadowExecutor:
     def __init__(self, workspace):
         self.workspace = workspace
         self.ghost_env = os.path.join(workspace, "ghost_city")
-        
+
     def setup_ghost(self):
         if os.path.exists(self.ghost_env): shutil.rmtree(self.ghost_env)
         shutil.copytree(self.workspace, self.ghost_env, ignore=shutil.ignore_patterns('ghost_city'))
-        
+
     def execute(self, code):
         self.setup_ghost()
         # Execute code inside ghost env...

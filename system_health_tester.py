@@ -26,7 +26,7 @@ class SystemHealthTester:
             except Exception as e:
                 print(f"[TESTER] Endpoint {url} failed: {e}")
                 all_passed = False
-        
+
         if all_passed:
             self.successes += 1
             print("[TESTER] Cycle PASSED.")
@@ -34,7 +34,7 @@ class SystemHealthTester:
             self.failures += 1
             print("[TESTER] Cycle FAILED. Restarting backend...")
             self.restart_backend()
-            
+
     def restart_backend(self):
         # Force restart
         subprocess.run(["taskkill", "/F", "/IM", "python.exe"], capture_output=True)

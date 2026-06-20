@@ -14,10 +14,10 @@ class SwarmHealer:
             res = requests.get("http://localhost:8000/api/machine-heartbeat", timeout=2)
             if res.status_code != 200:
                 raise Exception("API Unresponsive")
-        except:
+        except Exception:
             print("[HEALER] Socket failure detected. Healing...")
             self.heal_bus()
-            
+
     def heal_bus(self):
         # Surgical restart of components
         subprocess.run(["taskkill", "/F", "/IM", "python.exe"], capture_output=True)

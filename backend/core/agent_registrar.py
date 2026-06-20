@@ -12,12 +12,12 @@ class AgentRegistrar:
     def register_agent(self, name, role, risk_profile="Balanced", model="h2o-danube3:4b"):
         """Registers a new agent sim for the population with Deep Sims Traits."""
         agents = self.get_registered_agents()
-        
+
         # Hardware-Backed SHA-256 Trust Layer
         raw_id = f"{name}_{role}_{len(agents)}".encode('utf-8')
         sha_id = hashlib.sha256(raw_id).hexdigest()[:12]
         wallet_address = f"0x{hashlib.sha256(raw_id[::-1]).hexdigest()[:40]}"
-        
+
         # OpenClaw Financial Personalization
         budget_limit = 1000
         if risk_profile == "Aggressive":
@@ -51,7 +51,7 @@ class AgentRegistrar:
         try:
             with open(self.storage_path, "r") as f:
                 return json.load(f)
-        except:
+        except Exception:
             return []
 
 if __name__ == "__main__":

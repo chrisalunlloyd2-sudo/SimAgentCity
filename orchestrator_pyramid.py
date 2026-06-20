@@ -20,7 +20,7 @@ class Observer:
     """The telemetry and logging layer."""
     def __init__(self, log_dir):
         self.log_dir = log_dir
-        
+
     def observe(self, agent_name, action, result):
         log_entry = {
             "timestamp": datetime.now().isoformat(),
@@ -36,7 +36,7 @@ class PyramidOrchestrator:
     def __init__(self):
         self.actor = Actor("Genesis-Actor")
         self.observer = Observer(os.path.join(os.getcwd(), "briefcase", "genesis_logs"))
-        
+
     def run_layer(self, layer_tasks):
         """Processes a layer of the pyramid."""
         for task in layer_tasks:

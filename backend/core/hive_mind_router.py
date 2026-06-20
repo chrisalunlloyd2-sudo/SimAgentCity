@@ -26,20 +26,20 @@ class HiveMindRouter:
         Determines which 'Brain Power Plant' handles the current municipal service.
         """
         model = self.models.get(complexity, self.models["FAST"])
-        
+
         payload = {
             "model": model,
             "prompt": prompt,
             "system": system_prompt,
             "stream": False
         }
-        
+
         try:
             start_time = time.time()
             # Increase timeout to handle slower models
             response = requests.post(self.ollama_api, json=payload, timeout=30)
             latency = time.time() - start_time
-            
+
             if response.status_code == 200:
                 return {
                     "response": response.json().get("response", ""),
@@ -50,7 +50,7 @@ class HiveMindRouter:
             print(f"[ROUTER] Ollama error: {response.status_code}")
         except Exception as e:
             print(f"[ROUTER] Ollama connection failure: {e}")
-        
+
         # Fallback for offline/timeout
         return self._generate_fallback(prompt)
 
@@ -58,7 +58,7 @@ class HiveMindRouter:
         """Generates a retro-style fallback thought bubble."""
         prompt_lower = prompt.lower()
         mock_resp = "..."
-        
+
         if "thought bubble" in prompt_lower or "chat bubble" in prompt_lower:
             quotes = [
                 "Reticulating splines...",
@@ -73,7 +73,7 @@ class HiveMindRouter:
             mock_resp = "HYPOTHESIS: Input stream anomaly detected."
         else:
             mock_resp = "[METABOLIC SUCCESS] Process completed via fallback."
-            
+
         return {
             "response": mock_resp,
             "model_used": "MOCK_FALLBACK",
@@ -91,10 +91,10 @@ if __name__ == "__main__":
     # Step 8: Natural Selection Test
     print("Testing Hive Mind Router...")
     router = HiveMindRouter()
-    
+
     # Test Chat Bubble (Fast Route)
     thought = router.generate_chat_bubble("Worker_01", "Miner", "Sifting data")
     print(f"Agent Thought: {thought}")
-    
+
     if thought:
         print("Test Passed. Winner Selected.")
