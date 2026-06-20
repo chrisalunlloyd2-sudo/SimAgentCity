@@ -14,13 +14,13 @@ class ToKMemoryArena:
         self.fd = os.open("tok_arena.bin", os.O_RDWR | os.O_CREAT | os.O_TRUNC)
         os.ftruncate(self.fd, self.size)
         self.arena = mmap.mmap(self.fd, self.size)
-        
+
     def write_node(self, offset, uuid, parent_offset, child_ptr, weight, flags):
         """Writes a 64-byte dense node payload."""
-        # UUID(8), Parent(2), Child(2), Weight(2), Flags(2) = 16 bytes. 
+        # UUID(8), Parent(2), Child(2), Weight(2), Flags(2) = 16 bytes.
         # Padding to 64 bytes for cache alignment
         data = struct.pack('QHHHHH', uuid, parent_offset, child_ptr, weight, flags, 0)
         self.arena[offset:offset+16] = data
-        
+
     def read_node(self, offset):
         return struct.unpack('QHHHHH', self.arena[offset:offset+16])

@@ -20,14 +20,14 @@ class TrustLayer:
         """
         # In real-life, this would hook into your ASIC miner telemetry
         work_hash = hashlib.sha256(str(physical_work_data).encode()).hexdigest()
-        
+
         # Simulated trust derivation from 'work'
         # Higher complexity in work data -> Higher trust score
         multiplier = 1.0 + (len(work_hash) / 64)
-        
+
         self.trust_graph[agent_id] = round(multiplier, 2)
         self.save_graph()
-        
+
         return {
             "agent": agent_id,
             "work_proof": work_hash[:16],
@@ -39,7 +39,7 @@ class TrustLayer:
         """Cryptographic Wall: Prevents spoofing in high-security zones."""
         if agent_id not in self.trust_graph:
             return False, "Identity unknown. No PoW history found."
-        
+
         # Verify the agent's work history
         # (Simplified for simulation)
         return True, "Identity verified via SHA-256 Anchor."
@@ -53,7 +53,7 @@ class TrustLayer:
             try:
                 with open(self.ledger_path, "r") as f:
                     self.trust_graph = json.load(f)
-            except:
+            except Exception:
                 self.trust_graph = {}
 
 if __name__ == "__main__":
@@ -62,9 +62,9 @@ if __name__ == "__main__":
     tl = TrustLayer("./test_trust_graph.json")
     proof = tl.mint_trust("Sim_Genesis", "ASIC_NODE_01_WORK_UNIT_1044")
     print(f"Minted Trust: {proof['trust_multiplier']}x multiplier.")
-    
+
     if proof['trust_multiplier'] > 1.0:
         print("Test Passed. Winner Selected.")
-    
+
     if os.path.exists("./test_trust_graph.json"):
         os.remove("./test_trust_graph.json")

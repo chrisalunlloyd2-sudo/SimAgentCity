@@ -15,5 +15,5 @@ class VotingEngine:
         # Validate vote schema
         if vote not in ["YES", "NO", "ABSTAIN"]:
             return {"status": "ERROR", "message": "Invalid ballot structure"}
-            
+
         return {"status": "SUCCESS", "agent": agent_id, "vote": vote}

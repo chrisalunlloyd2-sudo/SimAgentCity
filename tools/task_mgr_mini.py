@@ -43,7 +43,7 @@ if __name__ == "__main__":
     print("Testing Process Summary...")
     procs = get_process_summary()
     print(f"Found {len(procs)} active process buildings.")
-    
+
     if len(procs) > 0:
         print("Test Passed. Winner Selected.")
     else:

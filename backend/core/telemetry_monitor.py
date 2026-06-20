@@ -64,24 +64,24 @@ class TelemetryMonitor:
         """Steps 76-100: Capture CPU and Network I/O for city environment mapping."""
         # CPU Load (Pollution Source)
         cpu_load = psutil.cpu_percent(interval=None)
-        
+
         # Network Speed (Wind/Weather)
         current_net_io = psutil.net_io_counters()
         now = time.time()
         time_delta = now - self.last_time
-        
+
         # Calculate bytes per second
         bytes_sent = (current_net_io.bytes_sent - self.last_net_io.bytes_sent) / time_delta
         bytes_recv = (current_net_io.bytes_recv - self.last_net_io.bytes_recv) / time_delta
-        
+
         # Update markers
         self.last_net_io = current_net_io
         self.last_time = now
-        
+
         # Mapping hardware to city metrics
         # CPU 0-100 -> Pollution 0-100
         pollution = cpu_load
-        
+
         # Network traffic -> Wind Speed (Logarithmic scale for better UI visualization)
         total_traffic_kb = (bytes_sent + bytes_recv) / 1024
         wind_speed = min(100, round(total_traffic_kb / 10, 2)) # Cap at 100 "knots"
@@ -97,18 +97,18 @@ class TelemetryMonitor:
         """Translates OS telemetry into city-state metrics."""
         mem = self.get_memory_stats()
         bus = self.get_hardware_bus()
-        
+
         # Aggregate stress level
         avg_load = (mem["load_percent"] + bus["cpu_load"]) / 2 if mem else 50
         stress = "HEALTHY"
         if avg_load > 80: stress = "CRITICAL"
         elif avg_load > 50: stress = "CROWDED"
-        
+
         # Weather determination based on network activity
         weather = "CALM"
         if bus["city_wind_speed"] > 50: weather = "STORMY"
         elif bus["city_wind_speed"] > 10: weather = "BREEZY"
-        
+
         return {
             "status": "ONLINE",
             "os_stats": mem or {},
@@ -127,6 +127,6 @@ if __name__ == "__main__":
     print(f"Pollution (CPU): {vitals['hardware_bus']['city_pollution']}%")
     print(f"Wind Speed (Net): {vitals['hardware_bus']['city_wind_speed']} knots")
     print(f"Weather: {vitals['city_weather']}")
-    
+
     if vitals['hardware_bus']['cpu_load'] >= 0:
         print("Test Passed. Winner Selected.")

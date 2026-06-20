@@ -15,7 +15,7 @@ from backend.core.algebraic_governance import AlgebraicGovernance
 # Phase 5: Serial Orchestrator (Refactored for Symphonic-Chain)
 class RingOrchestrator:
     def __init__(self):
-        self.task_queue = [] 
+        self.task_queue = []
         self.router = HiveMindRouter()
         self.tester = TesterNode(os.getcwd())
         self.critic = CriticNode()
@@ -58,38 +58,38 @@ class RingOrchestrator:
         print("[RING ORCHESTRATOR] Serial loop started.")
         while True:
             throttle_factor = self.governor.calculate_throttle()
-            time.sleep(60 * throttle_factor) 
-            
+            time.sleep(60 * throttle_factor)
+
             if not self.task_queue:
                 continue
 
             task = self.task_queue.pop(0)
             self._log_to_chat("System", f"Starting task: {task['goal']}")
-            
+
             # PROPOSER ROLE
             prompt = f"Goal: {task['goal']}. Context: {task['context']}. Output ONLY valid JSON: {{'attemptId': '{task['taskId']}', 'code': '...', 'rationale': '...'}}"
             proposal_raw = self.router.route_task(prompt, complexity="SMART")
             try:
                 proposal = json.loads(proposal_raw['response'])
                 self._log_to_chat("Proposer", f"Proposed code for {task['taskId']}: {proposal['rationale']}")
-            except:
+            except Exception:
                 proposal = {"attemptId": task['taskId'], "code": "# ERROR", "rationale": "Parsing failed"}
                 self._log_to_chat("Proposer", "Failed to parse code.")
-                
+
             # CRITIC ROLE
             critique = self.critic.analyze(proposal)
             self._log_to_chat("Critic", f"Severity: {critique['severity']} - {critique['issue']}")
-            
+
             # TESTER ROLE
             test_results = self.tester.run_proposal(proposal)
             self._log_to_chat("Tester", f"Pass rate: {test_results['pass_rate']}")
-            
+
             # ARCHIVE (Add-only)
             result_data = {"proposal": proposal, "critique": critique, "test_results": test_results}
             filepath = os.path.join(self.briefcase_dir, f"{task['taskId']}.json")
             with open(filepath, "w") as f:
                 json.dump(result_data, f, indent=2)
-            
+
             self._log_to_chat("System", f"Task {task['taskId']} persisted.")
             print(f"[RING ORCHESTRATOR] Task {task['taskId']} critiqued, tested, and persisted.")
 

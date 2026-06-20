@@ -44,7 +44,7 @@ class RoadBuilder:
         """Step 101-150: Safe deletion (move to city trash)."""
         trash_dir = os.path.join(self.city_root, "city_trash")
         if not os.path.exists(trash_dir): os.makedirs(trash_dir)
-        
+
         target = os.path.join(self.city_root, path)
         if os.path.exists(target):
             shutil.move(target, os.path.join(trash_dir, os.path.basename(path)))
@@ -55,13 +55,13 @@ if __name__ == "__main__":
     # Step 8: Natural Selection Test
     builder = RoadBuilder("./test_road_city")
     if not os.path.exists("./test_road_city"): os.makedirs("./test_road_city")
-    
+
     print("Testing Transit Protocols...")
     tcp_walk = builder.protocol_dispatch({}, "TCP")
     udp_bike = builder.protocol_dispatch({}, "UDP")
-    
+
     print(f"TCP Protocol Mapping: {tcp_walk['transit_type']}")
     print(f"UDP Protocol Mapping: {udp_bike['transit_type']}")
-    
+
     if tcp_walk['transit_type'] == "WALK" and udp_bike['transit_type'] == "BIKE":
         print("Test Passed. Winner Selected.")

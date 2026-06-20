@@ -28,7 +28,7 @@ class ZoningManager:
             try:
                 with open(self.storage_path, "r") as f:
                     self.zones = json.load(f)
-            except:
+            except Exception:
                 self.zones = {}
 
     def get_all_zones(self):
@@ -42,10 +42,10 @@ if __name__ == "__main__":
     zm.set_zone(5, 5, "INDUSTRIAL")
     zone = zm.get_zone(5, 5)
     print(f"Zone at 5,5: {zone}")
-    
+
     if zone == "INDUSTRIAL":
         print("Test Passed. Winner Selected.")
-    
+
     # Cleanup
     if os.path.exists("./test_zones.json"):
         os.remove("./test_zones.json")

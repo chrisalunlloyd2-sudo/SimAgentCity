@@ -14,7 +14,7 @@ class RegistryBridge:
         """Reads registry keys to visualize them as buildings."""
         if hive_name not in self.hives:
             return []
-        
+
         keys = []
         try:
             with winreg.OpenKey(self.hives[hive_name], subkey) as key:
@@ -32,7 +32,7 @@ class RegistryBridge:
                         break
         except Exception as e:
             print(f"Registry Access Error: {e}")
-            
+
         return keys
 
     def read_value(self, hive_name, subkey, value_name):
@@ -48,7 +48,7 @@ class RegistryBridge:
         """Step 26-50: Safe write-operation in HKCU namespace."""
         if hive_name != "HKEY_CURRENT_USER":
             return False, "Write access restricted to HKEY_CURRENT_USER for safety."
-        
+
         # Enforce safe zone
         if not subkey.startswith(self.safe_prefix):
             return False, f"Write access restricted to {self.safe_prefix} namespace."
@@ -77,19 +77,19 @@ class RegistryBridge:
 if __name__ == "__main__":
     # Step 8: Natural Selection Test
     rb = RegistryBridge()
-    
+
     print("Testing Registry Write (Safe Zone)...")
     success, msg = rb.write_value("HKEY_CURRENT_USER", "Software\\SimAgentCity\\TestBuilding", "Status", "Functional")
     print(f"Write Test: {success}, {msg}")
-    
+
     if success:
         val = rb.read_value("HKEY_CURRENT_USER", "Software\\SimAgentCity\\TestBuilding", "Status")
         print(f"Read Verification: {val}")
-        
+
         # Cleanup (Bulldozer check)
         del_success, del_msg = rb.delete_value("HKEY_CURRENT_USER", "Software\\SimAgentCity\\TestBuilding", "Status")
         print(f"Delete Test: {del_success}, {del_msg}")
-        
+
         if del_success:
             print("Test Passed. Winner Selected.")
     else:
