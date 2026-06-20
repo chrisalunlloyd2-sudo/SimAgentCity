@@ -35,13 +35,13 @@ class NetworkResearchDaemon:
         print("[RESEARCH] Initiating host adapter sweep...")
         adapters = psutil.net_if_addrs()
         stats = psutil.net_if_stats()
-        
+
         active_adapters = []
         for name, addrs in adapters.items():
             is_up = stats[name].isup if name in stats else False
             if is_up:
                 active_adapters.append(name)
-                
+
         # Probe local gateway/localhost latency
         start = time.perf_counter()
         try:
@@ -50,7 +50,7 @@ class NetworkResearchDaemon:
             latency = (time.perf_counter() - start) * 1000 # ms
         except Exception:
             latency = -1.0
-            
+
         print(f"[RESEARCH] Active adapters: {active_adapters} | Local latency: {latency:.2f}ms")
         return {
             "adapters": active_adapters,
@@ -63,17 +63,17 @@ class NetworkResearchDaemon:
         print("[RESEARCH] Reading local ai_attributes.json for ClawHub compliance...")
         if not os.path.exists(self.clawhub_schema_path):
             return {"compliance": "FAILED", "reason": "ai_attributes.json missing"}
-            
+
         try:
             with open(self.clawhub_schema_path, "r", encoding="utf-8") as f:
                 data = json.load(f)
-            
+
             # Map deterministic keys to ClawHub requirements
             params = data.get("model_parameters", {})
             required_keys = ["batch", "dropout", "temp", "rag_k", "heads", "rope", "mem"]
             matched = [k for k in required_keys if k in params]
             score = len(matched) / len(required_keys)
-            
+
             print(f"[RESEARCH] ClawHub deterministic schema match: {len(matched)}/{len(required_keys)} ({score*100:.1f}%)")
             return {
                 "compliance": "PASSED" if score == 1.0 else "PARTIAL",
@@ -88,19 +88,19 @@ class NetworkResearchDaemon:
         print("\n[RESEARCH] --- STARTING RESEARCH CYCLE ---")
         net_stats = self.run_network_audit()
         claw_stats = self.verify_clawhub_compliance()
-        
+
         research_payload = {
             "timestamp": "2026-06-01T01:03:00.000Z",
             "network_audit": net_stats,
             "clawhub_audit": claw_stats,
             "project_id": "SimAgentCity-v1.3"
         }
-        
+
         # Formulate deterministic research hash
         payload_str = json.dumps(research_payload, sort_keys=True)
         research_hash = hashlib.sha256(payload_str.encode()).hexdigest()
         print(f"[RESEARCH] Deterministic Research Signature: {research_hash}")
-        
+
         # Commit to local blockchain ledger as a dynamic DePIN validation escrow
         tx_hash = self.ledger.add_transaction(
             sender=agent_id,

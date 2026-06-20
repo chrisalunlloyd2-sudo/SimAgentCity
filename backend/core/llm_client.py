@@ -38,6 +38,6 @@ if __name__ == "__main__":
         print("Ollama detected.")
         res, status = client.ping("Hello")
         print(f"Ping Result: {status}")
-    except:
+    except Exception:
         print("Ollama not running. Interface verified, skipping network test.")
     print("Test Passed. Winner Selected.")

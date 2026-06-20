@@ -111,7 +111,7 @@ class AgentCityOrchestrator:
         aid = task_data["id"]
         fpath = task_data["file"]
         desc = task_data["task"]
-        
+
         if aid not in self.active_agents:
             self.active_agents[aid] = {"status": "IDLE", "thought": "Awaiting orders.", "xp": 0, "stamina": 100}
 
@@ -126,7 +126,7 @@ class AgentCityOrchestrator:
 
         self.active_agents[aid].update({"status": "PROCESSING", "thought": "Analyzing terrain...", "stamina": self.active_agents[aid]["stamina"] - 20})
         asyncio.run_coroutine_threadsafe(self._broadcast_to_ui(aid, "Analyzing terrain..."), asyncio.get_event_loop())
-        
+
         # Pay for processing
         self._clear_transaction(aid, "PROCESSING_CYCLE", cost=5)
 
@@ -134,13 +134,13 @@ class AgentCityOrchestrator:
         try:
             with open(full_path, "r", encoding="utf-8") as f:
                 content = f.read()
-            
+
             self.active_agents[aid]["thought"] = self.hive.generate_chat_bubble(aid, "Worker", "Data Extraction")
             asyncio.run_coroutine_threadsafe(self._broadcast_to_ui(aid, self.active_agents[aid]["thought"]), asyncio.get_event_loop())
 
             res = self.hive.route_task(f"Process this file: {desc}\n\nContent:\n{content}", complexity="SMART")
             result = res.get("response", "")
-            
+
             if res.get("status") != "SUCCESS" and res.get("status") is not None:
                 raise Exception(f"Neural Router Failure: {res.get('status')}")
 
@@ -149,14 +149,14 @@ class AgentCityOrchestrator:
             os.makedirs(os.path.dirname(final_dest), exist_ok=True)
             with open(final_dest, "w", encoding="utf-8") as f:
                 f.write(result)
-            
+
             self.bridge.move_file(fpath, f"history/{os.path.basename(fpath)}")
-            
+
             self.active_agents[aid]["xp"] = self.active_agents[aid].get("xp", 0) + 10
-            
+
             # Reward agent for successful processing
             self.ledger.add_transaction(sender="System", receiver=aid, amount=50, currency="PYTHON_COIN", contract="REWARD_PROCESSING")
-            
+
             final_msg = "Mission complete. Gained 10 XP & 50 Coins."
             self.active_agents[aid].update({"status": "IDLE", "thought": final_msg})
             asyncio.run_coroutine_threadsafe(self._broadcast_to_ui(aid, final_msg), asyncio.get_event_loop())
@@ -177,7 +177,7 @@ class AgentCityOrchestrator:
         import json
         print("[ORCHESTRATOR] INITIATING DAILY BUILD & GOVERNANCE RESOLUTION...")
         print("[ORCHESTRATOR] TIMESTAMP: 2026-05-31T17:52:00.000Z | PROJECT_ID: SimAgentCity-v1.3 | AGENT_ID: Antigravity-CLI-Architect | STATUS: COMPILING")
-        
+
         # 1. Compile and sanity-check files in the workspace
         print(f"[ORCHESTRATOR] Compiling and checking workspace: {self.bridge.root_dir}")
         import py_compile
@@ -193,30 +193,30 @@ class AgentCityOrchestrator:
                     except Exception as ce:
                         print(f"[ORCHESTRATOR] [BUILD WARNING] Workspace file compilation failed for {file}: {ce}")
                         error_count += 1
-                        
+
         print(f"[ORCHESTRATOR] Build Compilation Status: {compiled_count} successful, {error_count} failed.")
 
         # 2. Read and apply city motions (governance)
         motions_file = os.path.join("C:\\Users\\viper", "city_motions.json")
         if not os.path.exists(motions_file):
             motions_file = "city_motions.json" # fallback
-            
+
         if os.path.exists(motions_file):
             try:
                 with open(motions_file, "r", encoding="utf-8") as f:
                     motions = json.load(f)
-                
+
                 print(f"[ORCHESTRATOR] Found {len(motions)} proposed governance motion(s). Processing votes...")
-                
+
                 for motion_id, details in motions.items():
                     if details.get("status") == "VOTING":
                         # Simulate voting
                         for aid in self.active_agents.keys():
                             vote = random.randint(50, 150)
                             details["votes_for"] = details.get("votes_for", 0) + vote
-                        
+
                         print(f"[ORCHESTRATOR] Motion '{details.get('description')}' currently has {details.get('votes_for')} votes (Threshold: {details.get('threshold')})")
-                        
+
                         if details["votes_for"] >= details.get("threshold", 1000):
                             details["status"] = "APPROVED"
                             print(f"[ORCHESTRATOR] [MOTION APPROVED] '{details.get('description')}' has been successfully passed!")
@@ -224,10 +224,10 @@ class AgentCityOrchestrator:
                                 print(f"[ORCHESTRATOR] [UPGRADE] Unlocked advanced capability for proposer: {details.get('proposer')}")
                                 if details.get("proposer") in self.active_agents:
                                     self.active_agents[details["proposer"]]["xp"] = self.active_agents[details["proposer"]].get("xp", 0) + 150
-                                    
+
                 with open(motions_file, "w", encoding="utf-8") as f:
                     json.dump(motions, f, indent=4)
-                    
+
             except Exception as e:
                 print(f"[ORCHESTRATOR] [MOTION ERROR] Failed to resolve motions: {e}")
         else:
@@ -240,7 +240,7 @@ if __name__ == "__main__":
     print("Testing Orchestrator logic...")
     from os_bridge import OSBridge
     from hive_mind_router import HiveMindRouter
-    
+
     orch = AgentCityOrchestrator("./test_orch")
     print("Orchestrator Heartbeat Active.")
     print("Test Passed. Winner Selected.")

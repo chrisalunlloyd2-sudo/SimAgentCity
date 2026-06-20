@@ -13,10 +13,10 @@ class OSBridge:
         """Moves a file within the managed root directory."""
         source = os.path.normpath(os.path.join(self.root_dir, source_rel_path))
         dest = os.path.normpath(os.path.join(self.root_dir, dest_rel_path))
-        
+
         if not os.path.exists(source):
             return False, f"Source {source} does not exist."
-            
+
         try:
             # Ensure destination directory exists
             os.makedirs(os.path.dirname(dest), exist_ok=True)
@@ -55,11 +55,11 @@ if __name__ == "__main__":
     test_dir = os.path.join(os.getcwd(), "test_city_tmp")
     if not os.path.exists(test_dir): os.makedirs(test_dir)
     with open(os.path.join(test_dir, "dummy.txt"), "w") as f: f.write("test")
-    
+
     bridge = OSBridge(test_dir)
     success, msg = bridge.move_file("dummy.txt", "processed/dummy.txt")
     print(f"Self-Test: {success}, {msg}")
-    
+
     # Cleanup
     if success:
         print("Test Passed. Winner Selected.")
