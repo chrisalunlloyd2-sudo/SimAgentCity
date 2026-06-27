@@ -1,217 +1,390 @@
-<!--
-TIMESTAMP: 2026-05-31T20:25:00.000Z
-PROJECT_ID: SimAgentCity-v1.3
-AGENT_ID: Antigravity-CLI-Architect
--->
-
-# 🌃 SimAgentCity (Genesis Edition)
-
-[![Status](https://img.shields.io/badge/Status-Phase_11_Active-blueviolet?style=for-the-badge)](https://github.com)
-[![Platform](https://img.shields.io/badge/Platform-Windows_OS-informational?style=for-the-badge)](https://github.com)
-[![Engine](https://img.shields.io/badge/UI_Engine-HTML5_Canvas-orange?style=for-the-badge)](https://github.com)
-[![Backend](https://img.shields.io/badge/Backend-FastAPI_%2F_Uvicorn-green?style=for-the-badge)](https://github.com)
-
-> **"The grid is the truth. The machine is the factory. The ledger is immutable."**
-
-Welcome to **SimAgentCity**, an autonomous software-engineering factory operating through an immersive, 1995-era isometric simulation of your operating system. Every pixel shift on the simulation grid correlates directly to bare-metal OS operations, sandboxed file processing, and cryptographic transactions.
-
----
-
-## 🏗️ Architectural Topology
-
-The city runs on a bi-directional pulse loop (1.2s sync frequency) that binds the HTML5 isometric canvas interface directly to a FastAPI backend powered by local LLM swarms.
-
-```mermaid
-graph TD
-    UI[HTML5 Isometric Canvas UI] -->|1.2s Pulse Sync| API[FastAPI Server]
-    API -->|Physical Disk Sync| FS[city_workspace Sandbox]
-    API -->|Process Demolition| TM[task_mgr_mini Telemetry]
-    API -->|Smart Escrow| Ledger[(Immutable Bank Ledger)]
-    API -->|Sandbox Container Spawn| Sandbox[Agent Containers]
-    API -->|Hardware Telemetry| Vitals[Windows Hardware Bus]
-```
-
----
-
-## 🌟 Modern Feature Suite
-
-### 🕹️ Retro 1995 SimCity Isometric Canvas
-An interactive 2:1 isometric rendering viewport. Drag-and-drop system files, process towers, and agents across a live spatial overlay.
-* **Crates:** Files inside the `city_workspace`
-* **Warehouses:** Subdirectories and nested workspace folders
-* **Data Towers:** Isolated Windows Registry Keys (`HKCU\Software`)
-* **Demolition:** Bulldoging a process skyscraper terminates its physical process on your system.
-
-### 🔌 Physical OS Metabolism
-Low-latency Windows API bindings map CPU telemetry, motherboard thermals, and network interfaces directly to municipal attributes like **City Pollution** and **Weather** in real-time.
-
-### 🏦 The Bank Monitor & Immutable Ledger
-An isolated ledger tracks every task transaction with absolute zero-spoofing security. Language-domain tokens are minted for computational performance, handled via cryptographically-bound smart escrow systems.
-
-### 🛡️ Private DePIN & ASIC Trust Layer
-Anchored directly to localized Web3 frameworks. Utilizes physical SHA-256 legacy ASIC miners as cryptographic Proof-of-Work anchors for verifying agent trust multipliers, combined with Systemic Behavioral Interpolation (SBI) to quarantine anomalies.
-
----
-*MISSION STATUS: SECTOR 3 ACTIVE (NOCTURNAL SHIFT)*
-
-# --- FOUNDRY v10.2 RESTORATION & EXPANSION ---
 # SimAgentCity
-================
 
-## Overview
-SimAgentCity is a comprehensive simulation framework for agent-based modeling of urban ecosystems. This project adheres to the v10.2 System Bible specification, ensuring meticulous standardization and exhaustive documentation.
+> SimAgentCity — part of the Viper RAID-0 workstation system.
 
-## Visual Badges
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Build Status](https://img.shields.io/badge/Build_Status-Passing-green.svg)](https://github.com/openrouter/SimAgentCity/actions)
-[![Version](https://img.shields.io/badge/Version-1.0.0-red.svg)](https://github.com/openrouter/SimAgentCity/releases)
+*Auto-generated 2026-06-27 00:41 from source — branch `main`, 45 Python modules, 1243 other files.*
 
-## ASCII Architecture
+## Architecture
+
 ```
-├──.git/
-├── README.md
-├── docs/
-│   ├── architecture.md
-│   ├── getting_started.md
-│   └── technical_reference.md
-├── src/
-│   ├── main.py
-│   ├── agent.py
-│   ├── city.py
-│   └── simulation.py
-├── tests/
-│   ├── test_agent.py
-│   ├── test_city.py
-│   └── test_simulation.py
-├── data/
-│   ├── city_data.csv
-│   ├── agent_data.csv
-│   └── simulation_data.csv
-└── requirements.txt
-```
-
-## Deep Dive Descriptions
-SimAgentCity is designed to model complex urban ecosystems, comprising agents, cities, and simulations. The framework provides a scalable and flexible architecture for exploring various scenarios, from traffic flow to economic development.
-
-### Axiomatic Breakdowns
-1. **UI:** The user interface is built using a modular design, allowing for easy customization and extension.
-2. **DB:** The database layer utilizes a relational database management system, ensuring efficient data storage and retrieval.
-3. **State:** The state machine is responsible for managing the simulation's state, including agent interactions and city dynamics.
-4. **API:** The application programming interface provides a standardized interface for interacting with the simulation, enabling seamless integration with external tools and services.
-
-## Multi-Platform Setups
-### Windows Setup
-1. Install Python 3.10+ from python.org
-2. Open PowerShell
-3. Run: pip install -r requirements.txt
-4. Execute: python src/main.py
-
-### Android Setup (Termux)
-1. Install Termux
-2. pkg install python git
-3. pip install -r requirements.txt
-4. python src/main.py
-
-## ASCII Data Flow Chart
-```
-                                      +---------------+
-                                      |  User Input  |
-                                      +---------------+
-                                             |
-                                             |
-                                             v
-                                      +---------------+
-                                      |  Data Parser  |
-                                      +---------------+
-                                             |
-                                             |
-                                             v
-                                      +---------------+
-                                      |  Simulation  |
-                                      |  Engine      |
-                                      +---------------+
-                                             |
-                                             |
-                                             v
-                                      +---------------+
-                                      |  Agent-Based  |
-                                      |  Modeling     |
-                                      +---------------+
-                                             |
-                                             |
-                                             v
-                                      +---------------+
-                                      |  City Dynamics  |
-                                      +---------------+
-                                             |
-                                             |
-                                             v
-                                      +---------------+
-                                      |  Output Generator|
-                                      +---------------+
-                                             |
-                                             |
-                                             v
-                                      +---------------+
-                                      |  Visualization  |
-                                      +---------------+
+  .director_payload.md
+  BUILD_LOG.txt
+  Blueprint.md
+  CHANGELOG.md
+  ENTERPRISE_MANIFESTO.md
+  GRAND_MASTER_PLAN.md
+  LAUNCH_CITY.bat
+  PROJECT_LOG.md
+  PROJECT_MAP.txt
+  PULSE_HEARTBEAT.txt
+  README.md
+  RUN_STRESS_TEST.bat
+  assets/
+    genesis_prime_core.png
+    robot_nurse_doctor.png
+    sim_agent_city_glow.png
+  backend/
+    __init__.py
+    main.py
+    core/
+      __init__.py
+      agent_container.py
+      agent_registrar.py
+      algebraic_governance.py
+      chrono_layer.py
+      critic_node.py
+      crypto_ledger.py
+      file_watcher.py
+      fitness_engine.py
+      fuzz_engine.py
+      hive_mind_router.py
+      llm_client.py
+    data/
+      ai_attributes.json
+  briefcase/
+    INITIAL_BOOT.json
+    symphony_state.json
+    genesis_logs/
+      genesis_step_1.json
+      genesis_step_10.json
+      genesis_step_100.json
+      genesis_step_1001.json
+      genesis_step_1002.json
+      genesis_step_1003.json
+      genesis_step_1004.json
+      genesis_step_1005.json
+      genesis_step_1006.json
+      genesis_step_1007.json
+      genesis_step_1008.json
+      genesis_step_1009.json
+  city_workspace/
+    genesis_test.txt
+    tower_block.txt
+  docs/
+    AXIOMATIC_STATE.md
+    EVOLUTIONARY_LOG.md
+    GUARDRAILS.md
+    PROGRESS.md
+    RING_MANIFESTO.md
+    TO_K_BLUEPRINT.md
+    architecture.md
+    technical_bible.md
+  frontend/
+    index.html
+    css/
+      style.css
+    js/
+      bridge.js
+      engine.js
+      gui.js
+      input.js
+      ...
 ```
 
-## 🚀 Quick Start (Operational Runbook)
+## Dependencies
 
-### 3.1 Environment Requirements
-- **OS Platform:** Windows OS (Required for physical Registry and API bindings)
-- **Runtime Environment:** Python 3.11+ and Node.js v24+
-- **Cognitive Model Swarms:** Local Ollama models (`h2o-danube3:4b` or `qwen2.5:0.5b`)
+External packages imported by this project:
 
-### 3.2 Installation
-Clone the repository and install the production manifest:
-```bash
-pip install -r requirements.txt
+`backend`, `core`, `fastapi`, `mmap`, `psutil`, `py_compile`, `pydantic`, `requests`, `tools`, `uvicorn`, `watchdog`, `webbrowser`, `websockets`, `winreg`
+
+## How to run
+
+Executable entry points (have a `__main__` block):
+
+- `python backend/core/agent_container.py`
+- `python backend/core/agent_registrar.py`
+- `python backend/core/crypto_ledger.py`
+- `python backend/core/file_watcher.py`
+- `python backend/core/hive_mind_router.py`
+- `python backend/core/llm_client.py`
+- `python backend/core/network_researcher.py`
+- `python backend/core/orchestrator.py`
+- `python backend/core/os_bridge.py`
+- `python backend/core/registry_bridge.py`
+- `python backend/core/ring_orchestrator.py`
+- `python backend/core/road_builder.py`
+
+## Modules
+
+### `backend/core/agent_container.py`
+
+- **class `AgentContainerManager`**
+  - methods: `spawn_agent_home`, `mount_volume`, `get_agent_storage_stats`
+
+### `backend/core/agent_registrar.py`
+
+- **class `AgentRegistrar`**
+  - methods: `register_agent`, `get_registered_agents`
+
+### `backend/core/algebraic_governance.py`
+
+- **class `AlgebraicGovernance`** — Uses wave-based harmonics to throttle and prioritize tasks.
+  - methods: `calculate_throttle`, `prioritize`
+
+### `backend/core/chrono_layer.py`
+
+- **class `ChronoLayer`** — Manages system ticks, turns, and epochs for voting governance.
+  - methods: `get_chronos_state`, `_get_phase`
+
+### `backend/core/critic_node.py`
+
+- **class `CriticNode`** — Phase 13: Structural and Logic Criticism Node.
+  - methods: `analyze`
+
+### `backend/core/crypto_ledger.py`
+
+- **class `Block`**
+  - methods: `calculate_hash`, `mine_block`
+- **class `CryptoLedger`**
+  - methods: `load_chain`, `save_chain`, `create_genesis_block`, `get_latest_block`, `add_transaction`, `get_balance`
+
+### `backend/core/file_watcher.py`
+
+- **class `CityFileHandler`**
+  - methods: `on_modified`, `on_created`, `on_deleted`, `on_moved`
+- **class `CityFileWatcher`** — Step 51-75: Real-time file system watcher to eliminate polling.
+  - methods: `start`, `stop`
+
+### `backend/core/fitness_engine.py`
+
+- **class `FitnessEngine`** — Calculates Darwinian fitness score for agent proposals.
+  - methods: `calculate`
+- **class `ScientificConduct`** — Enforces pre-commit testing and log creation.
+  - methods: `conduct_audit`
+
+### `backend/core/fuzz_engine.py`
+
+- **class `FuzzEngine`** — Generates chaotic noise for agent input mutation.
+  - methods: `mutate`
+- **class `ShadowExecutor`** — Runs code in a cloned ghost-environment replica.
+  - methods: `setup_ghost`, `execute`
+
+### `backend/core/hive_mind_router.py`
+
+- **class `HiveMindRouter`**
+  - methods: `route_task`, `_generate_fallback`, `generate_chat_bubble`
+
+### `backend/core/llm_client.py`
+
+- **class `LLMClient`**
+  - methods: `ping`, `process_file_task`
+
+### `backend/core/message_bus.py`
+
+- **class `SymphonyBus`** — Centralized, thread-safe asynchronous MessageBus.
+  - methods: `connect`, `disconnect`, `broadcast`
+
+### `backend/core/network_researcher.py`
+
+- **class `NetworkResearchDaemon`** — SimAgentCity Advanced Crawler & Network Auditor.
+  - methods: `run_network_audit`, `verify_clawhub_compliance`, `execute_and_seal_research`
+
+### `backend/core/orchestrator.py`
+
+- **class `AgentCityOrchestrator`**
+  - methods: `_on_fs_event`, `_clear_transaction`, `run_miner_loop`, `run_processor_loop`, `run_shipper_loop`, `_run_heartbeat`, `assign_task`, `_process_next`, `_execute_agent_flow`
+
+### `backend/core/os_bridge.py`
+
+- **class `OSBridge`**
+  - methods: `move_file`, `update_registry_mock`, `get_file_tree`
+
+### `backend/core/permutation_tester.py`
+
+- **class `ConstraintPermutationTester`** — Systematically tests all permutations within logic boundaries.
+  - methods: `derive_boundaries`, `run_exhaustive`
+
+### `backend/core/registry_bridge.py`
+
+- **class `RegistryBridge`**
+  - methods: `get_keys`, `read_value`, `write_value`, `delete_value`
+
+### `backend/core/ring_orchestrator.py`
+
+- **class `RingOrchestrator`**
+  - methods: `submit_task`, `_log_to_chat`, `run_continuous`
+
+### `backend/core/road_builder.py`
+
+- **class `RoadBuilder`** — Step 151-175: Transit Mapping
+  - methods: `build_road`, `protocol_dispatch`, `bulldoze`
+
+### `backend/core/sbi_monitor.py`
+
+- **class `SBIMonitor`**
+  - methods: `log_movement`, `interpolate_behavior`, `get_interpol_status`
+
+### `backend/core/script_sync.py`
+
+- **class `ScriptLibrarySync`** — Synchronizes successful briefcase artifacts to ViperNotes.
+  - methods: `sync`, `_export`
+
+### `backend/core/self_corrector.py`
+
+- **class `AgentSelfCorrector`**
+  - methods: `analyze_failure`, `apply_mutation`
+
+### `backend/core/symphony_sync.py`
+
+- **class `SymphonySync`** — Orchestrator for autonomous database correlation.
+  - methods: `run_symphony`
+
+### `backend/core/telemetry_monitor.py`
+
+- **class `MEMORYSTATUSEX`**
+- **class `MetabolismMonitor`**
+  - methods: `cleanup_processes`
+- **class `TelemetryMonitor`**
+  - methods: `get_memory_stats`, `get_hardware_bus`, `get_city_vitals`
+
+### `backend/core/tester_node.py`
+
+- **class `TesterNode`** — Phase 16/17: Hyper-Dimensional Stress & Exhaustive Permutation Testing.
+  - methods: `run_proposal`
+
+### `backend/core/tok_memory_arena.py`
+
+- **class `ToKMemoryArena`** — Phase 1: Native Memory Arena for Radix-Trie ToK.
+  - methods: `write_node`, `read_node`
+
+### `backend/core/trust_layer.py`
+
+- **class `TrustLayer`**
+  - methods: `mint_trust`, `verify_identity`, `save_graph`, `load_graph`
+
+### `backend/core/voting_engine.py`
+
+- **class `VotingEngine`** — Manages epoch-based structured ballot casting.
+  - methods: `cast_vote`
+
+### `backend/core/zoning_manager.py`
+
+- **class `ZoningManager`**
+  - methods: `set_zone`, `get_zone`, `save_zones`, `load_zones`, `get_all_zones`
+
+### `backend/main.py`
+
+- `get_chrono_status()` — Returns the current voting epoch, turn, and phase.
+- `post_chat(req)`
+- `get_chat()`
+- `get_heartbeat()`
+- `get_metropolis_state()`
+- `post_metropolis_state()`
+- `get_network_status()`
+- `get_physical_status()`
+- `get_hardware()`
+- `get_evolution()`
+- `get_hardware_telemetry()`
+- `mint_currency(req)`
+- `get_ledger_status()`
+
+### `cli_wrapper.py`
+
+- `run_server(port)`
+- `auto_launch_browser(port)` — Automatically closes existing SimAgentCity windows and launches a fresh one.
+- `main()`
+
+### `genesis_pyramid.py`
+
+- **class `GenesisOrchestrator`**
+  - methods: `log_move`, `execute_batch`
+
+### `lean_controller.py`
+
+- **class `LeanController`**
+  - methods: `throttle`, `run`
+
+### `master_controller.py`
+
+- **class `TaskPool`** — Pre-allocated pool for task objects to avoid dynamic allocation.
+  - methods: `get_task`
+- **class `ActorObserverController`** — Implements the Actor/Observer split and GITAUTOSHIP pattern.
+  - methods: `_observer_log`, `_git_autoship`, `run`, `run`
+
+### `master_verification.py`
+
+- **class `MasterVerifier`** — Verifies full system integrity.
+  - methods: `verify`
+
+### `orchestrator_pyramid.py`
+
+- **class `Actor`** — The task executor.
+  - methods: `execute`
+- **class `Observer`** — The telemetry and logging layer.
+  - methods: `observe`
+- **class `PyramidOrchestrator`**
+  - methods: `run_layer`
+
+### `stability_watchdog.py`
+
+- **class `StabilityWatchdog`** — Proactively monitors backend and controller PIDs.
+  - methods: `check_and_heal`, `is_running`
+
+### `swarm_healing.py`
+
+- **class `SwarmHealer`** — Proactively heals network and process deadlocks.
+  - methods: `diagnose_and_heal`, `heal_bus`
+
+### `system_health_tester.py`
+
+- **class `SystemHealthTester`**
+  - methods: `test_cycle`, `restart_backend`, `run`
+
+### `tools/agent_registrar_tool.py`
+
+- `main()`
+
+### `tools/task_mgr_mini.py`
+
+- `get_process_summary()` — AI-Compatible Task Manager: Returns lightweight process list for agent analysis.
+- `kill_process(pid)` — Step 176-200: Demolish a process sprite to kill the OS process.
+
+### `websocket_tester.py`
+
+- `test_ws()`
+
+## Public API index
+
+| Module | Function | Signature |
+|--------|----------|-----------|
+| `agent_registrar_tool` | `main` | `main()` |
+| `cli_wrapper` | `auto_launch_browser` | `auto_launch_browser(port)` |
+| `cli_wrapper` | `main` | `main()` |
+| `cli_wrapper` | `run_server` | `run_server(port)` |
+| `main` | `get_chat` | `get_chat()` |
+| `main` | `get_chrono_status` | `get_chrono_status()` |
+| `main` | `get_evolution` | `get_evolution()` |
+| `main` | `get_hardware` | `get_hardware()` |
+| `main` | `get_hardware_telemetry` | `get_hardware_telemetry()` |
+| `main` | `get_heartbeat` | `get_heartbeat()` |
+| `main` | `get_ledger_status` | `get_ledger_status()` |
+| `main` | `get_metropolis_state` | `get_metropolis_state()` |
+| `main` | `get_network_status` | `get_network_status()` |
+| `main` | `get_physical_status` | `get_physical_status()` |
+| `main` | `mint_currency` | `mint_currency(req)` |
+| `main` | `post_chat` | `post_chat(req)` |
+| `main` | `post_metropolis_state` | `post_metropolis_state()` |
+| `task_mgr_mini` | `get_process_summary` | `get_process_summary()` |
+| `task_mgr_mini` | `kill_process` | `kill_process(pid)` |
+| `websocket_tester` | `test_ws` | `test_ws()` |
+
+## Status
+
+- Branch: `main`
+- Last commit: 2026-06-20 10:34:36 -0600
+- File types: .json ×1206, .md ×16, .txt ×6, .bat ×5, .js ×4, .png ×3, .log ×1, .html ×1
+
+### Recent commits
 ```
-
-### 3.3 Running the City Server
-To start the city API server and automatically launch the retro UI in your default browser:
-```bash
-# Using the custom standalone Genesis wrapper
-C:\Users\viper\python\python.exe cli_wrapper.py --start
-```
-Navigate to: `http://localhost:8000/static/index.html` after start.
-
-### 3.4 Verification & Global Stress Test
-To verify the entire environment (OS telemetry, agent recruitment, task queue, and spatial coordination):
-```bash
-C:\Users\viper\python\python.exe cli_wrapper.py --test
+68f1d0f [Moe autonomous] SimAgentCity 2026-06-20 10:34
+eab0622 [Moe autonomous] SimAgentCity 2026-06-20 09:18
+b1b4062 [Moe autonomous] SimAgentCity 2026-06-20 00:26
+46ef5ed Automated Add-Only Sync
+c27e419 System: Integrate new premium visual assets, deterministic model attributes, and network researcher daemon. TIMESTAMP: 2026-06-01T01:05:00.000Z PROJECT_ID: SimAgentCity-v1.3 AGENT_ID: Antigravity-CLI-Architect
+7b9f826 System: Resolve README.md merge conflicts, successfully rebasing and merging upstream restoration guidelines with local stashed features. TIMESTAMP: 2026-05-31T22:36:00.000Z PROJECT_ID: SimAgentCity-v1.3 AGENT_ID: Antigravity-CLI-Architect
+2d6edc4 System: Merge and integrate Phase II stability upgrades, daily build validator, and active agent governance resolution. TIMESTAMP: 2026-05-31T19:25:00.000Z PROJECT_ID: SimAgentCity-v1.3 AGENT_ID: Antigravity-CLI-Architect
+0fff278 Enterprise: Automated Project Sync
 ```
 
 ---
-
-## 📈 The 1200-Step Execution Syllabus
-
-```
-SimAgentCity/
- ├── PART 1: THE OS & HARDWARE METABOLISM (Steps 1 - 300) [COMPLETED]
- │    ├── Phase 1: Deep Registry & Telemetry (Steps 1-100) [VERIFIED]
- │    ├── Phase 2: The Action Protocols (Steps 101-200) [VERIFIED]
- │    └── Phase 3: Agent Spawning & Local Sandboxing (Steps 201-300) [VERIFIED]
- ├── PART 2: THE 1995 SIM-UI FRAMEWORK (Steps 301 - 600) [COMPLETED]
- │    ├── Phase 4: Isometric Projection & Sprites (Steps 301-400) [VERIFIED]
- │    ├── Phase 5: The "God Hand" Interactivity (Steps 401-500) [VERIFIED]
- │    └── Phase 6: Dynamic Districts & Zoning (Steps 501-600) [VERIFIED]
- ├── PART 3: THE NEURAL ORCHESTRATION (Steps 601 - 900) [COMPLETED]
- │    ├── Phase 7: The Hive Mind Router (Steps 601-700) [VERIFIED]
- │    ├── Phase 8: Autonomous Workflows (Steps 701-800) [VERIFIED]
- │    ├── Phase 9: Self-Correction & Feedback (Steps 801-875) [VERIFIED]
- │    └── Phase 10: The Real-Life Hookup (Genesis) (Steps 876-900) [VERIFIED]
- └── PART 4: THE DECENTRALIZED FOUNDRY (Steps 901 - 1200) [IN PROGRESS]
-      ├── Phase 11: The Web3 Trap & DePIN (Steps 901-1050) [ACTIVE]
-      └── Phase 12: Automated Arbitration & Social Ecosystem (Steps 1051-1200) [QUEUED]
-```
-
-### 🏆 Current Progression Detail (Phase 11)
-* **Steps 901-950:** Implementing Hardware-Backed SHA-256 Trust Layer (ASIC hooks) `[IN PROGRESS]`
-* **Steps 951-1000:** Implementing Localized Smart Contracts & Escrow logic `[IN PROGRESS]`
-* **Steps 1001-1050:** Developing the SBI (Systemic Behavioral Interpolation) Monitor `[IN PROGRESS]`
-
----
-*MISSION STATUS: SECTOR 3 ACTIVE (NOCTURNAL SHIFT)*
+*README generated by `readme_generator.py` (Viper). Deterministic — derived from source, not LLM prose.*
