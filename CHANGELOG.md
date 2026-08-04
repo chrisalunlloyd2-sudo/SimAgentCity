@@ -41,6 +41,7 @@ All notable changes to this project.
 - **[Docs]** docs: auto-update [skip-docs] ($hash)
 - **[Docs]** docs: auto-update [skip-docs] ($hash)
 - **[Docs]** docs: auto-update [skip-docs] ($hash)
+- **[Docs]** docs: auto-update [skip-docs] ($hash)
 
 ## 2026-07
 - **[Docs]** docs(SimAgentCity): autonomous update ΓÇö 1 file(s) ($hash)
@@ -58,5 +59,4 @@ All notable changes to this project.
 - **[Changed]** System: Integrate new premium visual assets, deterministic model attributes, and network researcher daemon. TIMESTAMP: 2026-06-01T01:05:00.000Z PROJECT_ID: SimAgentCity-v1.3 AGENT_ID: Antigravity-CLI-Architect ($hash)
 - **[Changed]** System: Resolve README.md merge conflicts, successfully rebasing and merging upstream restoration guidelines with local stashed features. TIMESTAMP: 2026-05-31T22:36:00.000Z PROJECT_ID: SimAgentCity-v1.3 AGENT_ID: Antigravity-CLI-Architect ($hash)
 - **[Changed]** System: Merge and integrate Phase II stability upgrades, daily build validator, and active agent governance resolution. TIMESTAMP: 2026-05-31T19:25:00.000Z PROJECT_ID: SimAgentCity-v1.3 AGENT_ID: Antigravity-CLI-Architect ($hash)
-- **[Changed]** Enterprise: Automated Project Sync ($hash)
 
