@@ -25,6 +25,7 @@ All notable changes to this project.
 - **[Docs]** docs: auto-update [skip-docs] ($hash)
 - **[Docs]** docs: auto-update [skip-docs] ($hash)
 - **[Docs]** docs: auto-update [skip-docs] ($hash)
+- **[Docs]** docs: auto-update [skip-docs] ($hash)
 
 ## 2026-07
 - **[Docs]** docs(SimAgentCity): autonomous update ΓÇö 1 file(s) ($hash)
@@ -58,5 +59,4 @@ All notable changes to this project.
 - **[Changed]** Architecture: Councils of Perfection, Absolute Order, and Bank Monitor integrated ($hash)
 - **[Changed]** Phase 5: God Hand Interactivity & Drag-and-Drop Live ($hash)
 - **[Changed]** Phase 4: Isometric Evolution & Immersive Manifesto Update ($hash)
-- **[Changed]** Execute Steps 201-300: Agent Spawning & Local Sandboxing Integrated ($hash)
 
