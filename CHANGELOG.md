@@ -28,6 +28,7 @@ All notable changes to this project.
 - **[Docs]** docs: auto-update [skip-docs] ($hash)
 - **[Docs]** docs: auto-update [skip-docs] ($hash)
 - **[Docs]** docs: auto-update [skip-docs] ($hash)
+- **[Docs]** docs: auto-update [skip-docs] ($hash)
 
 ## 2026-07
 - **[Docs]** docs(SimAgentCity): autonomous update ΓÇö 1 file(s) ($hash)
@@ -58,5 +59,4 @@ All notable changes to this project.
 - **[Changed]** Execute Steps 701-800: Autonomous Industrial Loops & Bank Monitor Ledger ($hash)
 - **[Changed]** Execute Steps 601-700: Hive Mind Router & Syllabus README Live ($hash)
 - **[Changed]** Execute Steps 501-600: Dynamic Districts & Zoning logic integrated ($hash)
-- **[Changed]** Architecture: Councils of Perfection, Absolute Order, and Bank Monitor integrated ($hash)
 
