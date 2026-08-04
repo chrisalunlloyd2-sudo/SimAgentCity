@@ -23,6 +23,7 @@ All notable changes to this project.
 - **[Docs]** docs: auto-update [skip-docs] ($hash)
 - **[Docs]** docs: auto-update [skip-docs] ($hash)
 - **[Docs]** docs: auto-update [skip-docs] ($hash)
+- **[Docs]** docs: auto-update [skip-docs] ($hash)
 
 ## 2026-07
 - **[Docs]** docs(SimAgentCity): autonomous update ΓÇö 1 file(s) ($hash)
@@ -58,5 +59,4 @@ All notable changes to this project.
 - **[Changed]** Phase 4: Isometric Evolution & Immersive Manifesto Update ($hash)
 - **[Changed]** Execute Steps 201-300: Agent Spawning & Local Sandboxing Integrated ($hash)
 - **[Changed]** Execute Steps 176-200: Bi-directional Process Demolition Hooks Integrated ($hash)
-- **[Changed]** Execute Steps 101-175: RoadBuilder, Transit Protocols & Safe Delete ($hash)
 
