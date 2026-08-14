@@ -3,6 +3,7 @@
 All notable changes to this project.
 
 ## 2026-08
+- **[Changed]** [Moe autonomous] SimAgentCity 2026-08-14 15:21 ($hash)
 - **[Changed]** [Moe autonomous] SimAgentCity 2026-08-14 13:12 ($hash)
 - **[Changed]** [Moe autonomous] SimAgentCity 2026-08-14 11:12 ($hash)
 - **[Changed]** [Moe autonomous] SimAgentCity 2026-08-14 08:56 ($hash)
@@ -52,5 +53,4 @@ All notable changes to this project.
 - **[Changed]** [Moe autonomous] SimAgentCity 2026-08-12 14:39 ($hash)
 - **[Docs]** docs(SimAgentCity): autonomous update ΓÇö 4 file(s) ($hash)
 - **[Changed]** [Moe autonomous] SimAgentCity 2026-08-12 12:50 ($hash)
-- **[Changed]** [Moe autonomous] SimAgentCity 2026-08-12 10:02 ($hash)
 
