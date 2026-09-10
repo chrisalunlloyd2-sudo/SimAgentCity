@@ -11,17 +11,33 @@ from datetime import datetime
 class Actor:
     """The task executor."""
     def __init__(self, name):
+        """Init.
+
+        Args: name.
+        """
         self.name = name
 
     def execute(self, task):
+        """Execute.
+
+        Args: task.
+        """
         return {"status": "SUCCESS", "output": f"Task {task} executed by {self.name}"}
 
 class Observer:
     """The telemetry and logging layer."""
     def __init__(self, log_dir):
+        """Init.
+
+        Args: log_dir.
+        """
         self.log_dir = log_dir
 
     def observe(self, agent_name, action, result):
+        """Observe.
+
+        Args: agent_name, action, result.
+        """
         log_entry = {
             "timestamp": datetime.now().isoformat(),
             "agent": agent_name,
@@ -33,7 +49,9 @@ class Observer:
 
 # Pyramid Orchestrator
 class PyramidOrchestrator:
+    """PyramidOrchestrator (class)."""
     def __init__(self):
+        """Init (function)."""
         self.actor = Actor("Genesis-Actor")
         self.observer = Observer(os.path.join(os.getcwd(), "briefcase", "genesis_logs"))
 
